@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+@theme {
+  /* ---------------------------------------------------------------------
+   * Colors — extracted from Figma (qubite, node 0:1), verified against
+   * hero, bento-stability, feature-cards, and footer sections.
+   * ------------------------------------------------------------------- */
+  --color-bg: #090909;              /* page background (var(--background/primary) in Figma) */
+  --color-bg-pure: #000000;         /* hero section background */
+  --color-surface: #1e1f22;         /* circular icon-button fill (e.g. arrow-up-right) */
+  --color-surface-card: #09090f80;  /* bento card fill, rgba(9,10,15,0.5) */
+  --color-surface-card-faint: #09090f0d; /* rgba(9,10,15,0.05) */
+  --color-surface-glass: #ffffff0a; /* floating-glass-card fill, rgba(255,255,255,0.04) */
+
+  --color-border: #ffffff1f;        /* rgba(255,255,255,0.12), default card/glass border */
+  --color-border-faint: #ffffff0a;  /* rgba(255,255,255,0.04) */
+  --color-border-strong: #ffffff66; /* rgba(255,255,255,0.4), nav pill/cart button */
+  --color-border-slate: #1e293b;    /* footer dividers, social pills */
+  --color-border-avatar: #131b24;   /* avatar ring stroke */
+
+  --color-text: #ffffff;            /* primary copy, hero H1, nav */
+  --color-text-heading: #f3f4f6;    /* off-white section headlines */
+  --color-text-muted: #9ca3af;      /* bento card body copy */
+  --color-text-subtle: #94969c;     /* feature-card subhead/body */
+  --color-text-dim: #91a2a7;        /* scroll indicator, hero footnote */
+  --color-text-slate: #94a3b8;      /* footer tagline, footer links */
+  --color-text-faint: #4d4d4d;      /* footer group labels, copyright (grey/700) */
+
+  --color-accent-cyan: #00fffb;     /* kicker badge text, icon-container borders, tags */
+  --color-accent-blue: #3b82f6;     /* kicker badge border, icon-container borders, tags */
+  --color-accent-bronze: #82563e;   /* primary CTA button (Shop ASIC Machines) */
+  --color-accent-bronze-tint: #bb9f88; /* ecosystem-cards kicker badge */
+  --color-accent-green: #28c76f;    /* positive stat delta (+26%) */
+  --color-accent-orange: #994300;   /* solar energy-mix tag */
+  --color-accent-copper: #a46a4b;   /* stats icons/labels, resilience bullets, step-03 accent */
+  --color-accent-amber: #ffa000;    /* active tab (global-infrastructure) */
+
+  /* ---------------------------------------------------------------------
+   * Font families
+   * NOTE: the file is inconsistent — hero H1 uses literal "Arial Black"
+   * and card titles alternate between "Arimo" and "Arial" (likely
+   * unlinked text styles in Figma). Geist/Unbounded/Inter are the three
+   * intentional families; treat Arial/Arial Black/Arimo as needing
+   * designer confirmation before final implementation.
+   * ------------------------------------------------------------------- */
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;      /* nav, body copy, buttons, badges */
+  --font-display: "Unbounded", "Geist", sans-serif;                /* section headlines, bento titles */
+  --font-mono: "Geist Mono", ui-monospace, monospace;              /* deployment step numbers (01/02/03) */
+  --font-footer: "Inter", ui-sans-serif, system-ui, sans-serif;    /* footer copy, technical-spec micro text */
+
+  /* ---------------------------------------------------------------------
+   * Font sizes — every distinct size found on the canvas, named by px
+   * for exact traceability back to Figma.
+   * ------------------------------------------------------------------- */
+  --text-10: 0.625rem;   /* 10px — TRANS-ROUTE micro label */
+  --text-11: 0.6875rem;  /* 11px — energy-mix tags, footer link group titles */
+  --text-12: 0.75rem;    /* 12px — kicker badges, copyright, stat deltas */
+  --text-13: 0.8125rem;  /* 13px — nav "EN", hero footnote */
+  --text-14: 0.875rem;   /* 14px — nav links, card body copy */
+  --text-15: 0.9375rem;  /* 15px — button labels (Shop ASIC Machines) */
+  --text-16: 1rem;       /* 16px — subheads, footer tagline */
+  --text-18: 1.125rem;   /* 18px — hero paragraph */
+  --text-20: 1.25rem;    /* 20px — bento/feature card titles */
+  --text-38: 2.375rem;   /* 38px — bento section headline */
+  --text-40: 2.5rem;     /* 40px — feature-cards headline, stat value */
+  --text-72: 4.5rem;     /* 72px — hero H1 */
+
+  /* ---------------------------------------------------------------------
+   * Spacing — Tailwind v4 computes numeric spacing utilities dynamically
+   * from the default --spacing base (0.25rem = 4px), so every 4/8/12/16/
+   * 20/24/28/32/40/48/64/80/96px gap or padding found in the file (e.g.
+   * gap-6, p-10, px-20) already works with no extra tokens. Only these
+   * two values fall outside the default enumerated scale:
+   * ------------------------------------------------------------------- */
+  --spacing-25: 6.25rem; /* 100px — section vertical padding, kicker badge width */
+  --spacing-30: 7.5rem;  /* 120px — hero section top padding */
+
+  /* ---------------------------------------------------------------------
+   * Border radii — every distinct corner radius found on the canvas.
+   * ------------------------------------------------------------------- */
+  --radius-xs: 0.375rem;  /* 6px — energy-mix tag pills */
+  --radius-sm: 0.75rem;   /* 12px — icon containers, graphic placeholders */
+  --radius-md: 1.25rem;   /* 20px — social pills */
+  --radius-lg: 1.5rem;    /* 24px — floating-glass-card */
+  --radius-xl: 1.75rem;   /* 28px — feature cards */
+  --radius-2xl: 1.875rem; /* 30px — relocation-card */
+  --radius-3xl: 2rem;     /* 32px — bento cards */
+  --radius-pill: 6.25rem; /* 100px — nav CTA buttons, kicker badges */
+  --radius-full: 9999px;  /* 999px in Figma — avatar rings, cart button, circle-arrow buttons */
+
+  /* Layout widths */
+  --container-content: 90rem;
+  --container-copy: 42rem;
+  --container-readable: 36rem;
+  --container-card: 20rem;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+/* ---------------------------------------------------------------------
+ * Motion primitives — shared scroll-reveal, float, and pulse animations
+ * used across the page for a more dynamic, interactive feel.
+ * ------------------------------------------------------------------- */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 currentcolor;
+    opacity: 0.5;
+  }
+  100% {
+    box-shadow: 0 0 0 8px transparent;
+    opacity: 0;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 16s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .animate-float,
+  .animate-spin-slow {
+    animation: none;
+  }
+}
