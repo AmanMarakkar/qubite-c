@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Container } from '@/components/Container'
 
 const navLinks = [
-  { label: 'ASIC Machines', href: '/asic-machines', internal: true },
+  { label: 'Discover Machines', href: '/asic-machines', internal: true },
   { label: 'About', href: '/about', hasDropdown: true },
   { label: 'Hosting', href: '/hosting' },
 ]

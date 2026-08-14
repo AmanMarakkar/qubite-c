@@ -1,7 +1,7 @@
 import { Container } from '@/components/Container'
 
 const productLinks = [
-  { label: 'ASIC Machines', href: '/asic-machines' },
+  { label: 'Discover Machines', href: '/asic-machines' },
   { label: 'Hosting', href: '/hosting' },
 ]
 
