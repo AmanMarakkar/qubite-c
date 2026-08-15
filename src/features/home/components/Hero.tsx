@@ -1,7 +1,20 @@
-import { Button } from '@/components/Button'
 import { Container } from '@/components/Container'
 
 const avatars = ['/figma/hero/avatar-1.png', '/figma/hero/avatar-2.png', '/figma/hero/avatar-3.png']
+
+function HeadsetIcon({ className = 'size-3.5' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 16 16" className={className} fill="none" aria-hidden="true">
+      <path
+        d="M3 8.5V7a5 5 0 0 1 10 0v1.5M3 8.5v3a1 1 0 0 0 1 1h.5a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H3Zm10 0v3a1 1 0 0 1-1 1h-.5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1H13Zm-1 4.5v.5a1.5 1.5 0 0 1-1.5 1.5H8.5"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
 
 function CoinIcon({ className = 'size-3.5' }: { className?: string }) {
   return (
@@ -16,27 +29,21 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden bg-black">
       <div className="absolute inset-0 bg-[#050301]" aria-hidden="true" />
-      <div
-        className="absolute top-[-25%] left-[46%] h-[150%] w-[900px] -translate-x-1/2 -rotate-[9deg]"
-        style={{
-          background:
-            'radial-gradient(ellipse 42% 55% at 50% 35%, rgba(201,152,47,0.65) 0%, rgba(180,120,30,0.38) 32%, rgba(120,70,10,0.16) 55%, transparent 76%)',
-          filter: 'blur(55px)',
-        }}
+      <img
+        src="/figma/hero/hero-bg.png"
+        alt=""
+        className="absolute inset-0 h-full w-full object-cover"
         aria-hidden="true"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-black/30" aria-hidden="true" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20" aria-hidden="true" />
 
       <Container className="relative flex min-h-[560px] flex-col justify-center pt-30 pb-24 md:min-h-[820px] 2xl:max-w-[1600px]">
         <div className="grid w-full items-center gap-12 lg:grid-cols-[1.5fr_1fr] 2xl:gap-20">
           <div className="flex max-w-[820px] flex-col gap-5 2xl:max-w-[900px]">
-            <h1 className="animate-fade-in-up font-display text-[44px] leading-[1.05] font-black tracking-tight text-white md:text-[86px]">
+            <h1 className="animate-fade-in-up font-display text-[44px] leading-[1.05] font-black tracking-tight text-white md:text-[64px]">
               Powering the
               <br />
-              Future of
-              <br />
-              Mining
+              Future of Mining
             </h1>
             <p
               className="animate-fade-in-up max-w-[520px] text-base leading-relaxed text-white md:text-18"
@@ -46,27 +53,21 @@ export function Hero() {
               facilities, and operates them around the clock, so you earn predictable income without
               lifting a finger.
             </p>
-            <div className="animate-fade-in-up flex flex-wrap items-center gap-5 pt-2" style={{ animationDelay: '240ms' }}>
-              <Button
-                className="transition-transform duration-200 hover:-translate-y-0.5 active:scale-95"
-                icon={<img src="/figma/hero/shopping-cart.svg" alt="" className="size-[18px]" />}
+            <div className="animate-fade-in-up flex flex-wrap items-center gap-3.5 pt-2" style={{ animationDelay: '240ms' }}>
+              <button
+                type="button"
+                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:border-white/30 hover:bg-black/60 active:scale-95"
               >
-                Shop ASIC Machines
-              </Button>
-              <Button
-                variant="ghost"
-                iconPosition="right"
-                className="group"
-                icon={
-                  <img
-                    src="/figma/hero/arrow-right.svg"
-                    alt=""
-                    className="size-4 transition-transform duration-200 group-hover:translate-x-1"
-                  />
-                }
+                <img src="/figma/hero/shopping-cart.svg" alt="" className="size-[14px]" />
+                Explore Products
+              </button>
+              <button
+                type="button"
+                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:border-white/30 hover:bg-black/60 active:scale-95"
               >
-                Learn more
-              </Button>
+                <HeadsetIcon className="size-[14px]" />
+                Talk to human
+              </button>
             </div>
           </div>
 
