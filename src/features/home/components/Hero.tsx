@@ -3,68 +3,141 @@ import { Container } from '@/components/Container'
 
 const avatars = ['/figma/hero/avatar-1.png', '/figma/hero/avatar-2.png', '/figma/hero/avatar-3.png']
 
+function CoinIcon({ className = 'size-3.5' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 16 16" className={className} fill="none" aria-hidden="true">
+      <path d="M8 1.5 14.5 5.5V10.5L8 14.5L1.5 10.5V5.5L8 1.5Z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+      <path d="M8 5V11M6.3 6.3H9C9.55 6.3 10 6.75 10 7.3C10 7.85 9.55 8.3 9 8.3H6.3M6.3 8.3H9.2C9.75 8.3 10.2 8.75 10.2 9.3C10.2 9.85 9.75 10.3 9.2 10.3H6.3" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-black">
-      <img
-        src="/figma/hero/hero-bg.png"
-        alt=""
-        className="absolute inset-x-0 top-11 bottom-0 h-[calc(100%-2.75rem)] w-full object-cover object-bottom"
+      <div className="absolute inset-0 bg-[#050301]" aria-hidden="true" />
+      <div
+        className="absolute top-[-25%] left-[46%] h-[150%] w-[900px] -translate-x-1/2 -rotate-[9deg]"
+        style={{
+          background:
+            'radial-gradient(ellipse 42% 55% at 50% 35%, rgba(201,152,47,0.65) 0%, rgba(180,120,30,0.38) 32%, rgba(120,70,10,0.16) 55%, transparent 76%)',
+          filter: 'blur(55px)',
+        }}
         aria-hidden="true"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-black/30" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent" aria-hidden="true" />
 
-      <Container className="relative flex min-h-[560px] flex-col justify-center gap-5 pt-30 pb-24 md:min-h-[820px]">
-        <div className="flex max-w-[872px] flex-col gap-5">
-          <h1 className="animate-fade-in-up font-display text-[44px] leading-[1.05] font-black text-white md:text-72">
-            Powering the
-            <br />
-            Future of Mining
-          </h1>
-          <p
-            className="animate-fade-in-up max-w-[620px] text-base leading-relaxed text-white md:text-18"
-            style={{ animationDelay: '120ms' }}
+      <Container className="relative flex min-h-[560px] flex-col justify-center pt-30 pb-24 md:min-h-[820px] 2xl:max-w-[1600px]">
+        <div className="grid w-full items-center gap-12 lg:grid-cols-[1.5fr_1fr] 2xl:gap-20">
+          <div className="flex max-w-[820px] flex-col gap-5 2xl:max-w-[900px]">
+            <h1 className="animate-fade-in-up font-display text-[44px] leading-[1.05] font-black tracking-tight text-white md:text-[86px]">
+              Powering the
+              <br />
+              Future of
+              <br />
+              Mining
+            </h1>
+            <p
+              className="animate-fade-in-up max-w-[520px] text-base leading-relaxed text-white md:text-18"
+              style={{ animationDelay: '120ms' }}
+            >
+              Qubite supplies tax-advantaged mining and GPU servers, installs them in low-cost-power
+              facilities, and operates them around the clock, so you earn predictable income without
+              lifting a finger.
+            </p>
+            <div className="animate-fade-in-up flex flex-wrap items-center gap-5 pt-2" style={{ animationDelay: '240ms' }}>
+              <Button
+                className="transition-transform duration-200 hover:-translate-y-0.5 active:scale-95"
+                icon={<img src="/figma/hero/shopping-cart.svg" alt="" className="size-[18px]" />}
+              >
+                Shop ASIC Machines
+              </Button>
+              <Button
+                variant="ghost"
+                iconPosition="right"
+                className="group"
+                icon={
+                  <img
+                    src="/figma/hero/arrow-right.svg"
+                    alt=""
+                    className="size-4 transition-transform duration-200 group-hover:translate-x-1"
+                  />
+                }
+              >
+                Learn more
+              </Button>
+            </div>
+          </div>
+
+          <div
+            className="relative hidden h-[440px] lg:block"
+            style={{ perspective: '1400px', transformStyle: 'preserve-3d' }}
           >
-            Qubite supplies tax-advantaged mining and GPU servers, installs them in low-cost-power
-            facilities, and operates them around the clock, so you earn predictable income without
-            lifting a finger.
-          </p>
-          <div className="animate-fade-in-up flex flex-wrap items-center gap-5 pt-2" style={{ animationDelay: '240ms' }}>
-            <Button
-              className="transition-transform duration-200 hover:-translate-y-0.5 active:scale-95"
-              icon={<img src="/figma/hero/shopping-cart.svg" alt="" className="size-[18px]" />}
-            >
-              Shop ASIC Machines
-            </Button>
-            <Button
-              variant="ghost"
-              iconPosition="right"
-              className="group"
-              icon={
-                <img
-                  src="/figma/hero/arrow-right.svg"
-                  alt=""
-                  className="size-4 transition-transform duration-200 group-hover:translate-x-1"
-                />
-              }
-            >
-              Learn more
-            </Button>
-          </div>
-        </div>
+            {/* back coin — offset down-left, dimmer, creates the stacked-coin edge peeking out */}
+            <img
+              src="/bitcoin-coin.png"
+              alt=""
+              className="absolute bottom-0 left-[238px] z-0 h-[168px] w-[177px] object-contain brightness-75"
+              aria-hidden="true"
+            />
+            {/* front coin */}
+            <img
+              src="/bitcoin-coin.png"
+              alt=""
+              className="absolute bottom-4 left-[268px] z-[1] h-[174px] w-[183px] object-contain"
+              style={{ filter: 'drop-shadow(0 0 40px rgba(217,154,43,0.45))' }}
+              aria-hidden="true"
+            />
 
-        <div className="animate-float absolute top-1/3 right-5 hidden w-[340px] flex-col gap-5 rounded-lg border border-border bg-surface-glass p-6 backdrop-blur-[15px] transition-shadow duration-300 hover:shadow-[0_0_40px_-10px_rgba(255,255,255,0.25)] lg:right-20 lg:flex">
-          <div className="flex items-center justify-between">
-            <span className="flex items-center gap-2 text-sm font-semibold text-text-dim">
-              <img src="/figma/hero/cpu.svg" alt="" className="size-4" />
-              Hashrate
-            </span>
-            <span className="rounded-full bg-accent-green/10 px-2 py-1 text-xs font-semibold text-accent-green">
-              +26%
-            </span>
+            <div className="animate-float-tilt-back absolute top-0 right-8 z-10 flex w-[360px] flex-col gap-4 rounded-2xl border border-border bg-surface-glass p-5 shadow-[0_20px_45px_-15px_rgba(0,0,0,0.6)] backdrop-blur-[15px] transition-shadow duration-300 hover:shadow-[0_0_40px_-10px_rgba(255,255,255,0.25)]">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center gap-2 text-sm font-semibold text-text-dim">
+                  <CoinIcon className="size-4 text-accent-bronze-tint" />
+                  Your investment
+                </span>
+                <span className="rounded-full bg-accent-green/10 px-2 py-1 text-xs font-semibold text-accent-green">
+                  Active Pool
+                </span>
+              </div>
+              <span className="text-40 font-extrabold text-white">$25,000</span>
+
+              <div className="flex items-center gap-3">
+                <span className="text-[11px] text-text-subtle">60</span>
+                <div className="relative h-[2px] flex-1 rounded-full bg-white/15">
+                  <div className="absolute inset-y-0 left-0 w-[68%] rounded-full bg-gradient-to-r from-accent-bronze-tint to-accent-copper" />
+                  <div className="absolute top-1/2 left-[68%] size-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-accent-bronze-tint bg-white" />
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <span className="text-[11px] text-text-subtle">30</span>
+                <svg viewBox="0 0 240 40" className="h-8 flex-1" preserveAspectRatio="none" aria-hidden="true">
+                  <path
+                    d="M0 28 Q30 10 55 22 T110 18 T170 30 T240 8"
+                    fill="none"
+                    stroke="var(--color-accent-green)"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            <div className="animate-float-tilt-front absolute bottom-0 left-0 z-10 flex w-[320px] flex-col gap-3 rounded-2xl border border-border bg-surface-glass p-5 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)] backdrop-blur-[15px] transition-shadow duration-300 hover:shadow-[0_0_40px_-10px_rgba(255,255,255,0.25)]">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center gap-2 text-sm font-semibold text-text-dim">
+                  <CoinIcon className="size-4 text-accent-bronze-tint" />
+                  Profitability
+                </span>
+                <span className="rounded-full bg-accent-green/10 px-2 py-1 text-xs font-semibold text-accent-green">
+                  +26%
+                </span>
+              </div>
+              <span className="text-40 font-extrabold text-white">$728.56</span>
+              <span className="text-xs text-text-subtle">Since 3 months</span>
+            </div>
           </div>
-          <span className="text-40 font-extrabold text-white">1,500+ PH</span>
-          <span className="text-xs text-text-subtle">Since previous 30 days</span>
         </div>
       </Container>
 

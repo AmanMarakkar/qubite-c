@@ -63,94 +63,153 @@ const baseProducts: Product[] = [
 
 const products: Product[] = [...baseProducts, ...baseProducts, ...baseProducts]
 
+const cardFont = { fontFamily: 'Inter, system-ui, sans-serif' }
+
 function ProductCard({ product, delay }: { product: Product; delay: number }) {
   const inStock = product.status === 'In Stock'
 
   return (
     <Reveal delay={delay}>
-      <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/8 bg-[#0c0d10] transition-all duration-300 hover:-translate-y-1.5 hover:border-accent-copper/40 hover:shadow-[0_0_40px_-14px_var(--color-accent-copper)]">
-        <div className="relative flex h-40 items-center justify-center overflow-hidden p-6">
+      <div
+        className="group flex h-full w-full max-w-[380px] flex-col rounded-[22px] border border-[rgba(255,255,255,0.06)] bg-[#17130f] p-4 transition-transform duration-300 hover:-translate-y-1.5"
+        style={{
+          ...cardFont,
+          boxShadow: '0 0 40px rgba(120,80,40,0.15), 0 8px 24px rgba(0,0,0,0.4)',
+        }}
+      >
+        {/* image area */}
+        <div
+          className="relative h-[220px] overflow-hidden rounded-2xl"
+          style={{
+            background: 'radial-gradient(ellipse at center, #0d2b2e 0%, #0a1512 60%, #0a0a0a 100%)',
+          }}
+        >
+          {/* faint tech-grid texture */}
           <div
-            className="pointer-events-none absolute inset-0"
-            style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(0,255,251,0.12), transparent 65%)' }}
+            className="pointer-events-none absolute inset-0 opacity-[0.06]"
+            style={{
+              backgroundImage:
+                'linear-gradient(rgba(34,211,238,1) 1px, transparent 1px), linear-gradient(90deg, rgba(34,211,238,1) 1px, transparent 1px)',
+              backgroundSize: '18px 18px',
+            }}
+            aria-hidden="true"
           />
-          <div className="pointer-events-none absolute bottom-6 h-3 w-28 rounded-full bg-accent-cyan/25 blur-md" />
+
+          {/* watermark */}
+          <span className="absolute top-3 left-3 text-[9px] font-medium tracking-[0.1em] text-[#22d3ee]/40 uppercase">
+            Lumina
+          </span>
+
+          {/* stock badge */}
+          <span
+            className={`absolute top-3 right-3 z-10 rounded-full border px-3 py-1 text-[10px] font-bold tracking-[0.05em] uppercase ${
+              inStock
+                ? 'border-[rgba(74,222,128,0.3)] bg-[rgba(34,197,94,0.12)] text-[#4ade80]'
+                : 'border-[rgba(248,113,113,0.3)] bg-[rgba(239,68,68,0.12)] text-[#f87171]'
+            }`}
+          >
+            {inStock ? 'In Stock' : 'No Stock'}
+          </span>
+
+          {/* glowing diamond platform */}
+          <div
+            className="pointer-events-none absolute bottom-10 left-1/2 size-24 -translate-x-1/2 rotate-45 rounded-md bg-[#22d3ee]/25"
+            style={{ filter: 'blur(32px)' }}
+            aria-hidden="true"
+          />
+          <div
+            className="pointer-events-none absolute bottom-11 left-1/2 size-16 -translate-x-1/2 rotate-45 rounded-sm border border-[#22d3ee]/30 bg-[#22d3ee]/10"
+            aria-hidden="true"
+          />
+
           <img
             src={product.image}
             alt=""
-            className="relative h-full w-full object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.6)] transition-transform duration-500 group-hover:scale-110"
+            className="relative h-full w-full object-contain p-8 transition-transform duration-500 group-hover:scale-110"
           />
-          <span
-            className={`absolute top-3 right-3 rounded-full px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase ${
-              inStock ? 'bg-accent-green/15 text-accent-green' : 'bg-red-500/15 text-red-400'
-            }`}
-          >
-            {product.status}
-          </span>
+
+          {/* bottom vignette */}
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-16"
+            style={{ background: 'linear-gradient(to bottom, transparent, rgba(0,0,0,0.4))' }}
+            aria-hidden="true"
+          />
         </div>
 
-        <div className="flex flex-1 flex-col gap-3.5 p-5 pt-4">
-          <h3 className="text-[15px] leading-snug font-semibold text-white">{product.title}</h3>
+        {/* title */}
+        <h3 className="mt-3.5 line-clamp-2 text-[17px] leading-[1.3] font-semibold text-white">
+          {product.title}
+        </h3>
 
-          <div className="flex items-center justify-between">
-            <span className="rounded-full bg-accent-blue/15 px-2.5 py-1 text-[10px] font-bold tracking-wide text-accent-blue uppercase">
-              {product.tag}
+        {/* tag + price */}
+        <div className="mt-2.5 flex items-center justify-between">
+          <span className="rounded-full bg-[rgba(165,180,252,0.15)] px-3 py-1 text-[10px] font-bold tracking-[0.04em] text-[#a5b4fc] uppercase">
+            {product.tag}
+          </span>
+          <span className="text-[20px] font-bold tabular-nums text-[#f5a623]">{product.price}</span>
+        </div>
+
+        {/* divider */}
+        <div className="my-3.5 h-px bg-[rgba(255,255,255,0.08)]" />
+
+        {/* specs row */}
+        <div className="grid grid-cols-3">
+          <div className="relative flex flex-col items-center gap-1 after:absolute after:top-[15%] after:right-0 after:h-[70%] after:w-px after:bg-[rgba(255,255,255,0.08)] after:content-['']">
+            <span className="flex items-center gap-1 text-[10px] font-medium tracking-[0.04em] text-[#6b7280] uppercase">
+              <HashrateIcon className="size-3 text-[#22d3ee]" />
+              Hashrate
             </span>
-            <span className="text-lg font-bold text-accent-amber">{product.price}</span>
+            <span className="mt-1 text-[14px] font-semibold tabular-nums text-white">{product.hashrate}</span>
           </div>
+          <div className="relative flex flex-col items-center gap-1 after:absolute after:top-[15%] after:right-0 after:h-[70%] after:w-px after:bg-[rgba(255,255,255,0.08)] after:content-['']">
+            <span className="flex items-center gap-1 text-[10px] font-medium tracking-[0.04em] text-[#6b7280] uppercase">
+              <EfficiencyIcon className="size-3 text-[#facc15]" />
+              Efficiency
+            </span>
+            <span className="mt-1 text-[14px] font-semibold tabular-nums text-white">{product.efficiency}</span>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <span className="flex items-center gap-1 text-[10px] font-medium tracking-[0.04em] text-[#6b7280] uppercase">
+              <PowerIcon className="size-3 text-[#4ade80]" />
+              Power
+            </span>
+            <span className="mt-1 text-[14px] font-semibold tabular-nums text-white">{product.power}</span>
+          </div>
+        </div>
 
-          <div className="grid grid-cols-3 gap-2 border-t border-white/6 pt-3.5 text-center">
-            <div className="flex flex-col items-center gap-1">
-              <span className="flex items-center gap-1 text-[9px] tracking-wide text-text-subtle uppercase">
-                <HashrateIcon className="size-3 text-accent-cyan" />
-                Hashrate
-              </span>
-              <span className="text-xs font-semibold text-white">{product.hashrate}</span>
-            </div>
-            <div className="flex flex-col items-center gap-1 border-x border-white/6">
-              <span className="flex items-center gap-1 text-[9px] tracking-wide text-text-subtle uppercase">
-                <EfficiencyIcon className="size-3 text-accent-amber" />
-                Efficiency
-              </span>
-              <span className="text-xs font-semibold text-white">{product.efficiency}</span>
-            </div>
-            <div className="flex flex-col items-center gap-1">
-              <span className="flex items-center gap-1 text-[9px] tracking-wide text-text-subtle uppercase">
-                <PowerIcon className="size-3 text-accent-green" />
-                Power
-              </span>
-              <span className="text-xs font-semibold text-white">{product.power}</span>
-            </div>
+        {/* profit bar */}
+        <div
+          className="mt-3.5 flex items-center justify-between rounded-[14px] border border-[rgba(34,197,94,0.25)] px-4 py-3"
+          style={{
+            background: 'linear-gradient(135deg, rgba(34,197,94,0.10), rgba(21,128,61,0.15))',
+          }}
+        >
+          <div className="flex flex-col gap-1">
+            <span className="text-[10px] tracking-[0.04em] text-[#6b7280] uppercase">Est. Daily Profit</span>
+            <span className="text-[15px] font-bold tabular-nums text-[#4ade80]">{product.dailyProfit}</span>
           </div>
+          <div className="flex flex-col gap-1">
+            <span className="text-[10px] tracking-[0.04em] text-[#6b7280] uppercase">Payback</span>
+            <span className="text-[15px] font-bold tabular-nums text-[#6ee7a0]">{product.payback}</span>
+          </div>
+        </div>
 
-          <div className="grid grid-cols-2 gap-2 rounded-lg border border-accent-green/15 bg-accent-green/8 px-3 py-2.5">
-            <div className="flex flex-col gap-0.5">
-              <span className="text-[9px] font-semibold tracking-wide text-accent-green/70 uppercase">
-                Est. Daily Profit
-              </span>
-              <span className="text-sm font-bold text-accent-green">{product.dailyProfit}</span>
-            </div>
-            <div className="flex flex-col gap-0.5 border-l border-accent-green/15 pl-2">
-              <span className="text-[9px] font-semibold tracking-wide text-accent-green/70 uppercase">Payback</span>
-              <span className="text-sm font-bold text-accent-green">{product.payback}</span>
-            </div>
-          </div>
-
-          <div className="mt-auto flex items-center gap-2 pt-1">
-            <button
-              type="button"
-              className="flex flex-1 items-center justify-center gap-1.5 rounded-full bg-[#22c55e] px-4 py-2.5 text-xs font-bold tracking-wide text-white uppercase transition-all duration-200 hover:brightness-110 active:scale-95"
-            >
-              <WhatsAppIcon className="size-3.5" />
-              WhatsApp
-            </button>
-            <button
-              type="button"
-              className="flex-1 rounded-full border border-white/15 px-4 py-2.5 text-xs font-bold tracking-wide text-white uppercase transition-all duration-200 hover:border-white/40 hover:bg-white/5 active:scale-95"
-            >
-              Buy
-            </button>
-          </div>
+        {/* buttons */}
+        <div className="mt-3.5 flex items-center gap-2.5">
+          <button
+            type="button"
+            className="flex flex-1 items-center justify-center gap-1.5 rounded-full bg-gradient-to-b from-[#22c55e] to-[#16a34a] py-3 text-[13px] font-bold tracking-[0.03em] text-white uppercase transition-all duration-200 hover:brightness-110 active:scale-95"
+            style={{ boxShadow: '0 4px 14px rgba(34,197,94,0.3)' }}
+          >
+            <WhatsAppIcon className="size-3.5" />
+            WhatsApp
+          </button>
+          <button
+            type="button"
+            className="flex-1 rounded-full border border-white/15 py-3 text-[13px] font-bold tracking-[0.03em] text-white uppercase transition-all duration-200 hover:border-white/40 hover:bg-white/5 active:scale-95"
+          >
+            Buy
+          </button>
         </div>
       </div>
     </Reveal>
@@ -183,53 +242,53 @@ export function ProductsSection() {
               <label className="flex flex-col gap-1.5">
                 <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">Category</span>
                 <div className="relative">
-                  <select className="w-full min-w-44 cursor-pointer appearance-none rounded-lg border border-white/10 bg-black/40 py-2 pr-8 pl-3 text-sm text-white focus:border-accent-cyan/40 focus:outline-none">
+                  <select className="w-full min-w-44 cursor-pointer appearance-none rounded-full border border-[rgba(255,255,255,0.1)] bg-[#17130f] py-2.5 pr-9 pl-4 text-sm text-white focus:border-accent-cyan/40 focus:outline-none">
                     <option>Hydro Cooling Miners</option>
                     <option>Air Cooling Miners</option>
                     <option>Immersion Miners</option>
                   </select>
-                  <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-3 size-2.5 -translate-y-1/2 text-text-subtle" />
+                  <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-4 size-2.5 -translate-y-1/2 text-text-subtle" />
                 </div>
               </label>
 
               <label className="flex flex-col gap-1.5">
                 <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">Brand</span>
                 <div className="relative">
-                  <select className="w-full min-w-44 cursor-pointer appearance-none rounded-lg border border-white/10 bg-black/40 py-2 pr-8 pl-3 text-sm text-white focus:border-accent-cyan/40 focus:outline-none">
+                  <select className="w-full min-w-44 cursor-pointer appearance-none rounded-full border border-[rgba(255,255,255,0.1)] bg-[#17130f] py-2.5 pr-9 pl-4 text-sm text-white focus:border-accent-cyan/40 focus:outline-none">
                     <option>Hydro Cooling Miners</option>
                     <option>MicroBT</option>
                     <option>Bitmain</option>
                   </select>
-                  <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-3 size-2.5 -translate-y-1/2 text-text-subtle" />
+                  <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-4 size-2.5 -translate-y-1/2 text-text-subtle" />
                 </div>
               </label>
 
               <label className="flex flex-col gap-1.5">
                 <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">Sort</span>
                 <div className="relative">
-                  <select className="w-full min-w-32 cursor-pointer appearance-none rounded-lg border border-white/10 bg-black/40 py-2 pr-8 pl-3 text-sm text-white focus:border-accent-cyan/40 focus:outline-none">
+                  <select className="w-full min-w-32 cursor-pointer appearance-none rounded-full border border-[rgba(255,255,255,0.1)] bg-[#17130f] py-2.5 pr-9 pl-4 text-sm text-white focus:border-accent-cyan/40 focus:outline-none">
                     <option>None</option>
                     <option>Price: Low to High</option>
                     <option>Price: High to Low</option>
                     <option>Hashrate</option>
                   </select>
-                  <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-3 size-2.5 -translate-y-1/2 text-text-subtle" />
+                  <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-4 size-2.5 -translate-y-1/2 text-text-subtle" />
                 </div>
               </label>
             </div>
 
             <div className="relative w-full md:w-70">
-              <SearchIcon className="absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-text-subtle" />
+              <SearchIcon className="absolute top-1/2 left-4 size-4 -translate-y-1/2 text-text-subtle" />
               <input
                 type="text"
                 placeholder="Search products..."
-                className="w-full rounded-full border border-white/10 bg-black/40 py-2.5 pr-4 pl-10 text-sm text-white placeholder:text-text-faint focus:border-accent-cyan/40 focus:outline-none"
+                className="w-full rounded-full border border-[rgba(255,255,255,0.1)] bg-[#17130f] py-2.5 pr-4 pl-10 text-sm text-white placeholder:text-text-faint focus:border-accent-cyan/40 focus:outline-none"
               />
             </div>
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {products.map((product, i) => (
             <ProductCard key={`${product.title}-${i}`} product={product} delay={(i % 3) * 90} />
           ))}

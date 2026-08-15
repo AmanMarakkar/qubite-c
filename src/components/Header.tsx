@@ -80,7 +80,7 @@ export function Header() {
           <button
             type="button"
             aria-label="Cart"
-            className="flex size-8 items-center justify-center rounded-full border border-border-strong text-white transition-all duration-200 hover:border-white hover:bg-white/5 active:scale-90"
+            className="flex size-10 items-center justify-center rounded-full border border-white bg-transparent text-white transition-all duration-200 hover:bg-white/5 active:scale-90"
           >
             <img src="/figma/hero/shopping-cart.svg" alt="" className="size-[18px]" />
           </button>

@@ -147,6 +147,29 @@ body {
   }
 }
 
+/* Floating hero cards with a baked-in 3D tilt — the tilt lives inside the
+   same transform as the float, since a separate static transform would get
+   clobbered every frame by a `transform`-animating keyframe. */
+@keyframes float-tilt-back {
+  0%,
+  100% {
+    transform: perspective(600px) rotateY(-32deg) rotateX(4deg) translateY(0);
+  }
+  50% {
+    transform: perspective(600px) rotateY(-32deg) rotateX(4deg) translateY(-10px);
+  }
+}
+
+@keyframes float-tilt-front {
+  0%,
+  100% {
+    transform: perspective(600px) rotateY(-14deg) translateZ(60px) translateY(0);
+  }
+  50% {
+    transform: perspective(600px) rotateY(-14deg) translateZ(60px) translateY(-10px);
+  }
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(24px);
@@ -172,6 +195,17 @@ body {
   animation: spin-slow 16s linear infinite;
 }
 
+.animate-float-tilt-back {
+  animation: float-tilt-back 5s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.animate-float-tilt-front {
+  animation: float-tilt-front 5s ease-in-out infinite;
+  animation-delay: 0.3s;
+  transform-style: preserve-3d;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal {
     opacity: 1;
@@ -179,7 +213,15 @@ body {
     transition: none;
   }
   .animate-float,
-  .animate-spin-slow {
+  .animate-spin-slow,
+  .animate-float-tilt-back,
+  .animate-float-tilt-front {
     animation: none;
+  }
+  .animate-float-tilt-back {
+    transform: perspective(600px) rotateY(-32deg) rotateX(4deg);
+  }
+  .animate-float-tilt-front {
+    transform: perspective(600px) rotateY(-14deg) translateZ(60px);
   }
 }
