@@ -1,35 +1,53 @@
-import { Button } from '@/components/Button'
-import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
+
+function HeadsetIcon() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path
+        d="M3 8.5V7a5 5 0 0 1 10 0v1.5M3 8.5v3a1 1 0 0 0 1 1h.5a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H3Zm10 0v3a1 1 0 0 1-1 1h-.5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1H13Zm-1 4.5v.5a1.5 1.5 0 0 1-1.5 1.5H8.5"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+function ArrowIcon() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M3 8h9M9 4.5 12.5 8 9 11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
 
 export function CtaBanner() {
   return (
-    <section className="bg-black">
-      <Container className="py-24">
-        <Reveal>
-          <div className="group relative flex flex-col gap-10 overflow-hidden rounded-3xl border border-accent-copper px-8 py-10 shadow-[inset_0_0_17px_12px_#482919] transition-shadow duration-500 hover:shadow-[inset_0_0_24px_16px_#482919] md:flex-row md:items-center">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-r from-[rgba(165,88,0,0.2)] to-[rgba(17,17,18,0.2)] opacity-80 transition-opacity duration-500 group-hover:opacity-100"
-            />
-            <div className="relative flex flex-1 flex-col gap-3 text-left">
-              <h2 className="text-[32px] leading-tight font-bold text-[#f0f2f5]">Ready to deploy?</h2>
-              <p className="text-base leading-relaxed text-[#c8c8c8]">
-                Tell us your target hashrate and timeline — we&apos;ll come back with a site, power,
-                and hardware plan.
-              </p>
-            </div>
-            <div className="relative flex w-full flex-col gap-3 md:w-90">
-              <Button variant="cta" shape="rounded" className="w-full">
-                Request Deployment Plan
-              </Button>
-              <Button variant="dark" shape="rounded" className="w-full">
-                Explore Hardware Catalog
-              </Button>
-            </div>
+    <section className="deployment-cta-section">
+      <Reveal className="deployment-cta-reveal">
+        <div className="deployment-cta-banner">
+          <div className="deployment-cta-copy">
+            <h2>Ready to deploy?</h2>
+            <p>
+              Tell us your target hashrate and timeline — we&apos;ll come back with a site, power, and
+              hardware plan.
+            </p>
           </div>
-        </Reveal>
-      </Container>
+
+          <div className="deployment-cta-actions">
+            <button type="button" className="deployment-cta-button deployment-cta-human">
+              <HeadsetIcon />
+              Talk to human
+            </button>
+            <button type="button" className="deployment-cta-button deployment-cta-products">
+              <ArrowIcon />
+              Explore Products
+            </button>
+          </div>
+        </div>
+      </Reveal>
+      <span className="deployment-cta-orb" aria-hidden="true" />
     </section>
   )
 }

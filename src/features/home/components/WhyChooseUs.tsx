@@ -148,23 +148,23 @@ const verticals = [
 export function WhyChooseUs() {
   return (
     <section className="relative overflow-hidden bg-black">
-      <div className="absolute inset-x-0 top-0 h-[310px] overflow-hidden sm:h-[200px] lg:h-[310px]" aria-hidden="true">
+      <div className="absolute inset-x-0 top-0 h-[310px] overflow-hidden sm:h-[200px] lg:h-[clamp(300px,22vw,420px)]" aria-hidden="true">
         <img
           src="/figma/stats/earth-horizon.svg"
           alt=""
-          className="pointer-events-none absolute top-[-270px] left-1/2 h-[600px] w-[1460px] max-w-none -translate-x-1/2 opacity-80 sm:top-[clamp(-390px,calc(-510px+17.5vw),-270px)]"
+          className="pointer-events-none absolute top-0 left-1/2 h-[600px] w-[1460px] max-w-none -translate-x-1/2 opacity-80 lg:h-[clamp(600px,44vw,850px)] lg:w-[155vw]"
         />
       </div>
       <div
-        className="pointer-events-none absolute inset-x-0 top-[284px] bottom-0"
+        className="pointer-events-none absolute inset-x-0 top-[284px] bottom-0 lg:top-[clamp(420px,31vw,590px)]"
         style={{
           background:
-            'radial-gradient(ellipse 54% 68% at 100% 56%, rgba(0,88,81,0.46), transparent 72%), radial-gradient(ellipse 48% 74% at 0% 58%, rgba(115,63,36,0.45), transparent 72%)',
+            'linear-gradient(180deg, #000 0%, rgba(0,0,0,0) 18%), linear-gradient(105deg, #3a2118 0%, #17110d 28%, #030a09 52%, #003d39 100%)',
         }}
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto flex w-full max-w-[1080px] flex-col items-center gap-3 px-5 pt-[180px] pb-5 text-center sm:w-[81%] sm:px-0 sm:pt-[clamp(180px,calc(220px-2.93vw),200px)]">
+      <div className="relative mx-auto flex w-full max-w-[1080px] flex-col items-center gap-3 px-5 pt-[320px] pb-5 text-center sm:w-[81%] sm:px-0 sm:pt-[200px] lg:pt-[clamp(320px,24vw,450px)]">
         <Reveal>
           <div className="flex flex-col items-center gap-2">
             <TickMark />

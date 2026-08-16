@@ -1,10 +1,11 @@
+import { AsicComparison } from '@/features/home/components/AsicComparison'
 import { CtaBanner } from '@/features/home/components/CtaBanner'
 import { EcosystemCategories } from '@/features/home/components/EcosystemCategories'
+import { FacilitiesGallery } from '@/features/home/components/FacilitiesGallery'
 import { GlobalInfrastructure } from '@/features/home/components/GlobalInfrastructure'
 import { Hero } from '@/features/home/components/Hero'
 import { MiningProcess } from '@/features/home/components/MiningProcess'
 import { StabilityGrid } from '@/features/home/components/StabilityGrid'
-import { StabilityHighlight } from '@/features/home/components/StabilityHighlight'
 import { WhyChooseUs } from '@/features/home/components/WhyChooseUs'
 
 export function HomePage() {
@@ -13,10 +14,11 @@ export function HomePage() {
       <Hero />
       <MiningProcess />
       <WhyChooseUs />
+      <AsicComparison />
       <EcosystemCategories />
       <StabilityGrid />
-      <StabilityHighlight />
       <GlobalInfrastructure />
+      <FacilitiesGallery />
       <CtaBanner />
     </>
   )
