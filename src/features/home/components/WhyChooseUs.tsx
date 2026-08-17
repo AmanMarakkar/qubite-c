@@ -1,4 +1,5 @@
 import { Reveal } from '@/components/Reveal'
+import { WHATSAPP_LINK } from '@/lib/links'
 
 const GRADIENT = 'linear-gradient(90deg, #e8a765 0%, #b8794a 100%)'
 
@@ -240,14 +241,16 @@ export function WhyChooseUs() {
           </Reveal>
 
           <Reveal delay={500} className="flex justify-center">
-            <button
-              type="button"
+            <a
+              href={WHATSAPP_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-3 inline-flex w-fit items-center gap-2 rounded-full border border-[rgba(232,167,101,0.65)] bg-[#0c0a08] px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-[#151210] active:scale-95 sm:mt-[clamp(7px,0.73vw,10px)] sm:gap-[clamp(4px,0.58vw,8px)] sm:px-[clamp(14px,1.76vw,24px)] sm:py-[clamp(7px,0.88vw,12px)] sm:text-[clamp(8px,1.03vw,14px)]"
               style={{ boxShadow: '0 0 30px rgba(232,167,101,0.25)' }}
             >
               <HeadsetIcon className="size-4 text-[#e8a765]" />
               Talk to human
-            </button>
+            </a>
           </Reveal>
         </div>
       </div>

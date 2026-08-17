@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
+import { WHATSAPP_LINK } from '@/lib/links'
 
 function TickMark() {
   return <span className="inline-block h-[3px] w-8 rounded-full bg-[#ec4899]/70" />
@@ -273,14 +274,16 @@ export function AsicComparison() {
           </p>
         </Reveal>
         <Reveal delay={240}>
-          <button
-            type="button"
+          <a
+            href={WHATSAPP_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-3 inline-flex items-center gap-2 rounded-full border border-[rgba(232,167,101,0.4)] bg-[#0c0a08] px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-[#151210] active:scale-95"
             style={{ boxShadow: '0 0 30px rgba(232,167,101,0.25)' }}
           >
             <HeadsetIcon className="size-4 text-[#e8a765]" />
             Talk to human
-          </button>
+          </a>
         </Reveal>
 
         <Reveal delay={300} className="mt-10 w-full">

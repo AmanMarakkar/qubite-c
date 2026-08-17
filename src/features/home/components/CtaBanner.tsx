@@ -1,4 +1,5 @@
 import { Reveal } from '@/components/Reveal'
+import { WHATSAPP_LINK } from '@/lib/links'
 
 function HeadsetIcon() {
   return (
@@ -36,10 +37,15 @@ export function CtaBanner() {
           </div>
 
           <div className="deployment-cta-actions">
-            <button type="button" className="deployment-cta-button deployment-cta-human">
+            <a
+              href={WHATSAPP_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="deployment-cta-button deployment-cta-human"
+            >
               <HeadsetIcon />
               Talk to human
-            </button>
+            </a>
             <button type="button" className="deployment-cta-button deployment-cta-products">
               <ArrowIcon />
               Explore Products

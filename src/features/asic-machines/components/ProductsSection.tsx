@@ -1,5 +1,6 @@
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
+import { WHATSAPP_LINK } from '@/lib/links'
 import {
   ChevronDownIcon,
   EfficiencyIcon,
@@ -196,20 +197,24 @@ function ProductCard({ product, delay }: { product: Product; delay: number }) {
 
         {/* buttons */}
         <div className="mt-3.5 flex items-center gap-2.5">
-          <button
-            type="button"
+          <a
+            href={WHATSAPP_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex flex-1 items-center justify-center gap-1.5 rounded-full bg-gradient-to-b from-[#22c55e] to-[#16a34a] py-3 text-[13px] font-bold tracking-[0.03em] text-white uppercase transition-all duration-200 hover:brightness-110 active:scale-95"
             style={{ boxShadow: '0 4px 14px rgba(34,197,94,0.3)' }}
           >
             <WhatsAppIcon className="size-3.5" />
             WhatsApp
-          </button>
-          <button
-            type="button"
-            className="flex-1 rounded-full border border-white/15 py-3 text-[13px] font-bold tracking-[0.03em] text-white uppercase transition-all duration-200 hover:border-white/40 hover:bg-white/5 active:scale-95"
+          </a>
+          <a
+            href={WHATSAPP_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 rounded-full border border-white/15 py-3 text-center text-[13px] font-bold tracking-[0.03em] text-white uppercase transition-all duration-200 hover:border-white/40 hover:bg-white/5 active:scale-95"
           >
             Buy
-          </button>
+          </a>
         </div>
       </div>
     </Reveal>

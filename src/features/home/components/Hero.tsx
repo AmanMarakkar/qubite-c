@@ -1,4 +1,5 @@
 import { Container } from '@/components/Container'
+import { WHATSAPP_LINK } from '@/lib/links'
 
 const avatars = ['/figma/hero/avatar-1.png', '/figma/hero/avatar-2.png', '/figma/hero/avatar-3.png']
 
@@ -61,13 +62,15 @@ export function Hero() {
                 <img src="/figma/hero/shopping-cart.svg" alt="" className="size-[14px]" />
                 Explore Products
               </button>
-              <button
-                type="button"
+              <a
+                href={WHATSAPP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:border-white/30 hover:bg-black/60 active:scale-95"
               >
                 <HeadsetIcon className="size-[14px]" />
                 Talk to human
-              </button>
+              </a>
             </div>
           </div>
 
