@@ -60,7 +60,7 @@ export function Hero() {
                 className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:border-white/30 hover:bg-black/60 active:scale-95"
               >
                 <img src="/figma/hero/shopping-cart.svg" alt="" className="size-[14px]" />
-                Explore Products
+                Discover Machines
               </button>
               <a
                 href={WHATSAPP_LINK}
