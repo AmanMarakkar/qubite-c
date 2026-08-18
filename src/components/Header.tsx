@@ -6,7 +6,7 @@ import { WHATSAPP_LINK } from '@/lib/links'
 const navLinks = [
   { label: 'Discover Machines', href: '/asic-machines', internal: true },
   { label: 'About', href: '/about', hasDropdown: true },
-  { label: 'Hosting', href: '/hosting' },
+  { label: 'Hosting', href: '/hosting', internal: true },
 ]
 
 // TODO: swap in the real Telegram / support links once provided.

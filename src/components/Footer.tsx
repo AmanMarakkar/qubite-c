@@ -1,8 +1,9 @@
+import { Link } from 'react-router-dom'
 import { Container } from '@/components/Container'
 
 const productLinks = [
-  { label: 'Discover Machines', href: '/asic-machines' },
-  { label: 'Hosting', href: '/hosting' },
+  { label: 'Discover Machines', href: '/asic-machines', internal: true },
+  { label: 'Hosting', href: '/hosting', internal: true },
 ]
 
 const companyLinks = [
@@ -16,14 +17,23 @@ const companyLinks = [
   { label: 'Community', href: '/community' },
 ]
 
-function FooterLink({ label, href }: { label: string; href: string }) {
-  return (
-    <a
-      href={href}
-      className="group relative w-fit text-sm font-medium text-text-slate transition-colors hover:text-white"
-    >
+function FooterLink({ label, href, internal }: { label: string; href: string; internal?: boolean }) {
+  const className =
+    'group relative w-fit text-sm font-medium text-text-slate transition-colors hover:text-white'
+  const content = (
+    <>
       {label}
       <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-white transition-all duration-300 group-hover:w-full" />
+    </>
+  )
+
+  return internal ? (
+    <Link to={href} className={className}>
+      {content}
+    </Link>
+  ) : (
+    <a href={href} className={className}>
+      {content}
     </a>
   )
 }
