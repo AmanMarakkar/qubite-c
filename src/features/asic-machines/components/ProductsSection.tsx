@@ -20,7 +20,7 @@ interface Product {
   power: string
   dailyProfit: string
   payback: string
-  image: string
+  media: { type: 'image' | 'video'; src: string }
 }
 
 const baseProducts: Product[] = [
@@ -34,7 +34,7 @@ const baseProducts: Product[] = [
     power: '3,010 W',
     dailyProfit: '+$3.92',
     payback: '954d',
-    image: '/figma/cards/hardware.png',
+    media: { type: 'image', src: '/asic/media/photo.png' },
   },
   {
     title: 'Bitmain Antminer S21 XP (270TH)',
@@ -46,7 +46,7 @@ const baseProducts: Product[] = [
     power: '4,032 W',
     dailyProfit: '+$8.10',
     payback: '839d',
-    image: '/figma/deploy/cube.png',
+    media: { type: 'video', src: '/asic/media/video-1.webm' },
   },
   {
     title: 'Bitmain Antminer S21 Pro+ (234TH)',
@@ -58,13 +58,32 @@ const baseProducts: Product[] = [
     power: '5,280 W',
     dailyProfit: '+$11.20',
     payback: '795d',
-    image: '/figma/cards/glow-blob.png',
+    media: { type: 'video', src: '/asic/media/video-2.webm' },
   },
 ]
 
 const products: Product[] = [...baseProducts, ...baseProducts, ...baseProducts]
 
 const cardFont = { fontFamily: 'Inter, system-ui, sans-serif' }
+
+function ProductMedia({ media }: { media: Product['media'] }) {
+  return media.type === 'image' ? (
+    <img
+      src={media.src}
+      alt=""
+      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+    />
+  ) : (
+    <video
+      src={media.src}
+      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+      autoPlay
+      muted
+      loop
+      playsInline
+    />
+  )
+}
 
 function ProductCard({ product, delay }: { product: Product; delay: number }) {
   const inStock = product.status === 'In Stock'
@@ -123,11 +142,7 @@ function ProductCard({ product, delay }: { product: Product; delay: number }) {
             aria-hidden="true"
           />
 
-          <img
-            src={product.image}
-            alt=""
-            className="relative h-full w-full object-contain p-8 transition-transform duration-500 group-hover:scale-110"
-          />
+          <ProductMedia media={product.media} />
 
           {/* bottom vignette */}
           <div
