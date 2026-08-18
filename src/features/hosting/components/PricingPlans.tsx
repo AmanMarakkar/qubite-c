@@ -26,7 +26,7 @@ const plans: Plan[] = [
   {
     name: 'Low Rate Hosted',
     tagline: 'Lower rate, higher installation fee',
-    rate: '5.5¢',
+    rate: '0.065¢',
     upfront: '2 months rent deposit',
     installation: '$600 one-time installation fee',
     power: '8MW available',
@@ -35,7 +35,7 @@ const plans: Plan[] = [
   {
     name: 'Standard Install',
     tagline: 'Balanced entry plan',
-    rate: '6.0¢',
+    rate: '0.075¢',
     upfront: '2 months rent deposit',
     installation: '$300 one-time installation fee',
     power: '5MW available',
@@ -45,7 +45,7 @@ const plans: Plan[] = [
   {
     name: 'Quick Start',
     tagline: 'No installation fee',
-    rate: '6.8¢',
+    rate: '0.08¢',
     upfront: '2 months rent deposit',
     installation: '$0 one-time installation fee',
     power: '3MW available',
