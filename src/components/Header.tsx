@@ -73,22 +73,6 @@ export function Header() {
             const content = (
               <>
                 {link.label}
-                {link.hasDropdown ? (
-                  <svg
-                    viewBox="0 0 8 5"
-                    className="h-[5px] w-[8px] transition-transform duration-200 group-hover:-translate-y-0.5"
-                    fill="none"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M1 1L4 4L7 1"
-                      stroke="currentColor"
-                      strokeWidth="1.3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                ) : null}
                 <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-accent-bronze-tint transition-all duration-300 group-hover:w-full" />
               </>
             )

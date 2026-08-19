@@ -1,5 +1,6 @@
 import { Badge } from '@/components/Badge'
 import { Container } from '@/components/Container'
+import { Reveal } from '@/components/Reveal'
 
 export function AsicHero() {
   return (
@@ -23,21 +24,27 @@ export function AsicHero() {
       />
 
       <Container className="relative flex min-h-[660px] flex-col items-center justify-center gap-6 pt-32 pb-20 text-center">
-        <Badge tone="blue" className="backdrop-blur-sm">
-          Next-Gen Architecture Available
-        </Badge>
-        <h1 className="max-w-[860px] text-[44px] leading-[1.1] font-black text-white md:text-[58px]">
-          Engineered Infrastructure.
-          <br />
-          <span className="bg-gradient-to-r from-accent-bronze-tint to-accent-copper bg-clip-text text-transparent">
-            Built to Perform.
-          </span>
-        </h1>
-        <p className="max-w-[680px] text-base leading-relaxed text-text-dim">
-          Browse qubite&apos;s full range of high-performance servers and mining hardware
-          in-house engineered, fully hosted, and ready to deploy. Hosting, power, and maintenance
-          included on every machine.nce.
-        </p>
+        <Reveal>
+          <Badge tone="blue" className="backdrop-blur-sm">
+            Next-Gen Architecture Available
+          </Badge>
+        </Reveal>
+        <Reveal delay={80}>
+          <h1 className="max-w-[860px] text-[44px] leading-[1.1] font-black text-white md:text-[58px]">
+            Engineered Infrastructure.
+            <br />
+            <span className="bg-gradient-to-r from-accent-bronze-tint to-accent-copper bg-clip-text text-transparent">
+              Built to Perform.
+            </span>
+          </h1>
+        </Reveal>
+        <Reveal delay={140}>
+          <p className="max-w-[680px] text-base leading-relaxed text-text-dim">
+            Browse qubite&apos;s full range of high-performance servers and mining hardware
+            in-house engineered, fully hosted, and ready to deploy. Hosting, power, and
+            maintenance included on every machine.
+          </p>
+        </Reveal>
       </Container>
     </section>
   )
