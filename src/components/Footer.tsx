@@ -7,13 +7,14 @@ const productLinks = [
 ]
 
 const companyLinks = [
-  { label: 'About', href: '/about' },
+  { label: 'About', href: '/about', internal: true },
+  { label: 'Locations', href: '/about#locations', internal: true },
+  { label: 'Contact', href: '/about#contact', internal: true },
   { label: 'Careers', href: '/careers' },
   { label: 'Return Policy', href: '/return-policy' },
   { label: 'Imprint', href: '/imprint' },
   { label: 'Privacy Policy', href: '/privacy-policy' },
   { label: 'Terms', href: '/terms' },
-  { label: 'Contact', href: '/contact' },
   { label: 'Community', href: '/community' },
 ]
 

@@ -5,8 +5,8 @@ import { WHATSAPP_LINK } from '@/lib/links'
 
 const navLinks = [
   { label: 'Discover Machines', href: '/asic-machines', internal: true },
-  { label: 'About', href: '/about', hasDropdown: true },
   { label: 'Hosting', href: '/hosting', internal: true },
+  { label: 'About Us', href: '/about', internal: true },
 ]
 
 // TODO: swap in the real Telegram / support links once provided.
@@ -132,21 +132,6 @@ export function Header() {
 
           <button
             type="button"
-            className="hidden rounded-full border border-border-strong px-4 py-2 text-sm text-white transition-all duration-200 hover:border-white hover:bg-white/5 active:scale-95 sm:block"
-          >
-            Sign in
-          </button>
-
-          <button
-            type="button"
-            aria-label="Cart"
-            className="flex size-10 items-center justify-center rounded-full border border-white bg-transparent text-white transition-all duration-200 hover:bg-white/5 active:scale-90"
-          >
-            <img src="/figma/hero/shopping-cart.svg" alt="" className="size-[18px]" />
-          </button>
-
-          <button
-            type="button"
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((open) => !open)}
@@ -221,12 +206,6 @@ export function Header() {
               >
                 <img src="/figma/hero/globe.svg" alt="" className="size-3.5" />
                 EN
-              </button>
-              <button
-                type="button"
-                className="rounded-full border border-border-strong px-4 py-2 text-sm text-white transition-all duration-200 hover:border-white hover:bg-white/5 active:scale-95"
-              >
-                Sign in
               </button>
             </div>
           </Container>
