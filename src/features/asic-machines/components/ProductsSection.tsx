@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
+import { type Brand, type Category, type Product, products } from '@/features/asic-machines/products'
 import { WHATSAPP_LINK } from '@/lib/links'
 import {
   ChevronDownIcon,
@@ -11,71 +13,7 @@ import {
   WhatsAppIcon,
 } from './icons'
 
-type Category = 'Air Cooling Miners' | 'Hydro Cooling Miners' | 'Immersion Miners'
-type Brand = 'MicroBT' | 'Bitmain'
 type SortOption = 'None' | 'Price: Low to High' | 'Price: High to Low' | 'Hashrate'
-
-interface Product {
-  title: string
-  tag: string
-  price: string
-  status: 'In Stock' | 'No Stock'
-  hashrate: string
-  efficiency: string
-  power: string
-  dailyProfit: string
-  payback: string
-  media: { type: 'image' | 'video'; src: string }
-  category: Category
-  brand: Brand
-}
-
-const baseProducts: Product[] = [
-  {
-    title: 'MicroBT WhatsMiner M66S+ (318TH)',
-    tag: 'AIR',
-    price: 'Dh 3,000',
-    status: 'In Stock',
-    hashrate: '140 TH/s',
-    efficiency: '21.5 J/TH',
-    power: '3,010 W',
-    dailyProfit: '+$3.92',
-    payback: '954d',
-    media: { type: 'image', src: '/asic/media/photo.png' },
-    category: 'Air Cooling Miners',
-    brand: 'MicroBT',
-  },
-  {
-    title: 'Bitmain Antminer S21 XP (270TH)',
-    tag: 'BITMAIN',
-    price: '$6,800',
-    status: 'No Stock',
-    hashrate: '210 TH/s',
-    efficiency: '19.2 J/TH',
-    power: '4,032 W',
-    dailyProfit: '+$8.10',
-    payback: '839d',
-    media: { type: 'video', src: '/asic/media/video-1.webm' },
-    category: 'Hydro Cooling Miners',
-    brand: 'Bitmain',
-  },
-  {
-    title: 'Bitmain Antminer S21 Pro+ (234TH)',
-    tag: 'FAN',
-    price: '$8,900',
-    status: 'In Stock',
-    hashrate: '320 TH/s',
-    efficiency: '16.5 J/TH',
-    power: '5,280 W',
-    dailyProfit: '+$11.20',
-    payback: '795d',
-    media: { type: 'video', src: '/asic/media/video-2.webm' },
-    category: 'Immersion Miners',
-    brand: 'Bitmain',
-  },
-]
-
-const products: Product[] = [...baseProducts, ...baseProducts, ...baseProducts]
 
 function parseLeadingNumber(value: string): number {
   const match = value.replace(/,/g, '').match(/[\d.]+/)
@@ -116,7 +54,8 @@ function ProductCard({ product, delay }: { product: Product; delay: number }) {
         }}
       >
         {/* image area */}
-        <div
+        <Link
+          to={`/asic-machines/${product.slug}`}
           className="relative h-[220px] overflow-hidden rounded-2xl"
           style={{
             background: 'radial-gradient(ellipse at center, #0d2b2e 0%, #0a1512 60%, #0a0a0a 100%)',
@@ -168,12 +107,14 @@ function ProductCard({ product, delay }: { product: Product; delay: number }) {
             style={{ background: 'linear-gradient(to bottom, transparent, rgba(0,0,0,0.4))' }}
             aria-hidden="true"
           />
-        </div>
+        </Link>
 
         {/* title */}
-        <h3 className="mt-3.5 line-clamp-2 text-[17px] leading-[1.3] font-semibold text-white">
-          {product.title}
-        </h3>
+        <Link to={`/asic-machines/${product.slug}`}>
+          <h3 className="mt-3.5 line-clamp-2 text-[17px] leading-[1.3] font-semibold text-white transition-colors hover:text-accent-bronze-tint">
+            {product.title}
+          </h3>
+        </Link>
 
         {/* tag + price */}
         <div className="mt-2.5 flex items-center justify-between">
@@ -240,14 +181,12 @@ function ProductCard({ product, delay }: { product: Product; delay: number }) {
             <WhatsAppIcon className="size-3.5" />
             WhatsApp
           </a>
-          <a
-            href={WHATSAPP_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to={`/asic-machines/${product.slug}`}
             className="flex-1 rounded-full border border-white/15 py-3 text-center text-[13px] font-bold tracking-[0.03em] text-white uppercase transition-all duration-200 hover:border-white/40 hover:bg-white/5 active:scale-95"
           >
-            Buy
-          </a>
+            View Details
+          </Link>
         </div>
       </div>
     </Reveal>
