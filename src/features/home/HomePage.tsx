@@ -12,9 +12,9 @@ export function HomePage() {
   return (
     <>
       <Hero />
+      <AsicComparison />
       <MiningProcess />
       <WhyChooseUs />
-      <AsicComparison />
       <EcosystemCategories />
       <StabilityGrid />
       <GlobalInfrastructure />
