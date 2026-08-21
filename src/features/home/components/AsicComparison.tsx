@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
+import { products as catalogProducts } from '@/features/asic-machines/products'
 import { WHATSAPP_LINK } from '@/lib/links'
 
 function TickMark() {
@@ -97,6 +99,8 @@ function HeadsetIcon({ className = 'size-3.5' }: { className?: string }) {
 }
 
 interface Miner {
+  id: string
+  slug: string
   model: string
   release: string
   releaseSort: number
@@ -107,88 +111,49 @@ interface Miner {
   top: { letter: string; color: string }
   algorithm: string
   price: number
-  priceWas: number
-  priceUnit: string
+  priceDisplay: string
+  priceWasDisplay: string
   profit: number
 }
 
-const miners: Miner[] = [
-  {
-    model: 'Bitmain Antminer KS7 Pro',
-    release: 'Jul 2026',
-    releaseSort: new Date('2026-07-01').getTime(),
-    hashrate: '1 Mh/s',
-    hashrateSort: 1_000_000,
-    power: '2472W',
-    powerSort: 2472,
-    top: { letter: 'M', color: '#f97316' },
-    algorithm: 'RandomX',
-    price: 4798,
-    priceWas: 4999,
-    priceUnit: '/Mh',
-    profit: 23.02,
-  },
-  {
-    model: 'Bitmain Antminer Z15 Pro',
-    release: 'Jun 2023',
-    releaseSort: new Date('2023-06-01').getTime(),
-    hashrate: '840 kh/s',
-    hashrateSort: 840_000,
-    power: '2780W',
-    powerSort: 2780,
-    top: { letter: 'Z', color: '#3b82f6' },
-    algorithm: 'Equihash',
-    price: 3284,
-    priceWas: 4412,
-    priceUnit: '/kh',
-    profit: 19.86,
-  },
-  {
-    model: 'Bitmain Antminer S21 XP',
-    release: 'Jan 2026',
-    releaseSort: new Date('2026-01-01').getTime(),
-    hashrate: '1.16 Ph/s',
-    hashrateSort: 1_160_000_000_000_000,
-    power: '11020W',
-    powerSort: 11020,
-    top: { letter: 'B', color: '#f59e0b' },
-    algorithm: 'SHA-256',
-    price: 7159,
-    priceWas: 6173,
-    priceUnit: '/Ph',
-    profit: 10.01,
-  },
-  {
-    model: 'Bitmain Antminer Z15',
-    release: 'Jun 2020',
-    releaseSort: new Date('2020-06-01').getTime(),
-    hashrate: '420 kh/s',
-    hashrateSort: 420_000,
-    power: '1510W',
-    powerSort: 1510,
-    top: { letter: 'Z', color: '#3b82f6' },
-    algorithm: 'Equihash',
-    price: 2728,
-    priceWas: 3102,
-    priceUnit: '/kh',
-    profit: 9.64,
-  },
-  {
-    model: 'Bitdeer SealMiner A2',
-    release: 'Jun 2026',
-    releaseSort: new Date('2026-06-01').getTime(),
-    hashrate: '52.5 Gh/s',
-    hashrateSort: 52_500_000_000,
-    power: '7823W',
-    powerSort: 7823,
-    top: { letter: 'L', color: '#a855f7' },
-    algorithm: 'Scrypt',
-    price: 8999,
-    priceWas: 9650,
-    priceUnit: '',
-    profit: 9.23,
-  },
-]
+const brandBadge: Record<string, { letter: string; color: string }> = {
+  MicroBT: { letter: 'M', color: '#f97316' },
+  Bitmain: { letter: 'B', color: '#f59e0b' },
+}
+
+// Splits a formatted price like "Dh 3,000" or "$6,800" into its currency
+// prefix and numeric value, so a "was" price can be synthesized in the same
+// currency for the struck-through comparison line.
+function splitPrice(display: string): { prefix: string; amount: number } {
+  const match = display.match(/^([^\d]*)([\d,]+)/)
+  const prefix = match?.[1] ?? '$'
+  const amount = match ? parseFloat(match[2].replace(/,/g, '')) : 0
+  return { prefix, amount }
+}
+
+// Repeats the 3 real products to fill out the table for demo purposes —
+// swap back to `baseProducts` once the catalog has more real listings.
+const miners: Miner[] = catalogProducts.map((product, i) => {
+  const { prefix, amount } = splitPrice(product.price)
+  const wasAmount = Math.round((amount * 1.15) / 10) * 10
+  return {
+    id: `${product.slug}-${i}`,
+    slug: product.slug,
+    model: product.title,
+    release: product.specs.release,
+    releaseSort: product.specs.release === 'Latest Batch' ? Date.now() : new Date(product.specs.release).getTime(),
+    hashrate: product.hashrate,
+    hashrateSort: product.hashrateValue,
+    power: product.power,
+    powerSort: product.powerValue,
+    top: brandBadge[product.brand] ?? { letter: product.brand[0], color: '#a855f7' },
+    algorithm: product.algorithm,
+    price: product.priceUsd,
+    priceDisplay: product.price,
+    priceWasDisplay: `${prefix}${wasAmount.toLocaleString()}`,
+    profit: product.dailyProfitUsd,
+  }
+})
 
 type SortKey = 'model' | 'releaseSort' | 'hashrateSort' | 'powerSort' | 'price' | 'profit'
 
@@ -208,6 +173,7 @@ const columns: { key: SortKey | null; label: string }[] = [
 const filterPills = ['Category', 'Cooling', 'Manufacturer', 'Algorithm']
 
 export function AsicComparison() {
+  const navigate = useNavigate()
   const [query, setQuery] = useState('')
   const [favorites, setFavorites] = useState<Set<string>>(new Set())
   const [sort, setSort] = useState<{ key: SortKey; direction: 'asc' | 'desc' } | null>(null)
@@ -233,11 +199,11 @@ export function AsicComparison() {
     })
   }
 
-  function toggleFavorite(model: string) {
+  function toggleFavorite(id: string) {
     setFavorites((prev) => {
       const next = new Set(prev)
-      if (next.has(model)) next.delete(model)
-      else next.add(model)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
       return next
     })
   }
@@ -360,17 +326,21 @@ export function AsicComparison() {
                 <tbody>
                   {rows.map((miner) => (
                     <tr
-                      key={miner.model}
-                      className="border-b border-white/4 text-sm transition-colors hover:bg-white/3"
+                      key={miner.id}
+                      onClick={() => navigate(`/asic-machines/${miner.slug}`)}
+                      className="cursor-pointer border-b border-white/4 text-sm transition-colors hover:bg-white/3"
                     >
                       <td className="px-2 py-3">
                         <button
                           type="button"
-                          onClick={() => toggleFavorite(miner.model)}
-                          className={`transition-colors ${favorites.has(miner.model) ? 'text-[#e8a765]' : 'text-text-faint hover:text-white'}`}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            toggleFavorite(miner.id)
+                          }}
+                          className={`transition-colors ${favorites.has(miner.id) ? 'text-[#e8a765]' : 'text-text-faint hover:text-white'}`}
                           aria-label="Toggle favorite"
                         >
-                          <StarIcon filled={favorites.has(miner.model)} />
+                          <StarIcon filled={favorites.has(miner.id)} />
                         </button>
                       </td>
                       <td className="max-w-[180px] truncate px-2 py-3 font-semibold text-white">{miner.model}</td>
@@ -388,13 +358,8 @@ export function AsicComparison() {
                       <td className="px-2 py-3 whitespace-nowrap text-text-dim">{miner.algorithm}</td>
                       <td className="px-2 py-3 whitespace-nowrap">
                         <div className="flex flex-col">
-                          <span className="text-[11px] text-text-faint line-through">
-                            ${miner.priceWas.toLocaleString()}
-                            {miner.priceUnit}
-                          </span>
-                          <span className="font-bold tabular-nums text-[#f5a623]">
-                            ${miner.price.toLocaleString()}
-                          </span>
+                          <span className="text-[11px] text-text-faint line-through">{miner.priceWasDisplay}</span>
+                          <span className="font-bold tabular-nums text-[#f5a623]">{miner.priceDisplay}</span>
                         </div>
                       </td>
                       <td className="px-2 py-3 whitespace-nowrap">

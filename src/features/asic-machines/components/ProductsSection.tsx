@@ -47,7 +47,7 @@ function ProductCard({ product, delay }: { product: Product; delay: number }) {
   return (
     <Reveal delay={delay}>
       <div
-        className="group flex h-full w-full max-w-[380px] flex-col rounded-[22px] border border-[rgba(255,255,255,0.06)] bg-[#17130f] p-4 transition-transform duration-300 hover:-translate-y-1.5"
+        className="group mx-auto flex h-full w-full max-w-[380px] flex-col rounded-[22px] border border-[rgba(255,255,255,0.06)] bg-[#17130f] p-4 transition-transform duration-300 hover:-translate-y-1.5"
         style={{
           ...cardFont,
           boxShadow: '0 0 40px rgba(120,80,40,0.15), 0 8px 24px rgba(0,0,0,0.4)',
@@ -111,7 +111,7 @@ function ProductCard({ product, delay }: { product: Product; delay: number }) {
 
         {/* title */}
         <Link to={`/asic-machines/${product.slug}`}>
-          <h3 className="mt-3.5 line-clamp-2 text-[17px] leading-[1.3] font-semibold text-white transition-colors hover:text-accent-bronze-tint">
+          <h3 className="mt-3.5 line-clamp-2 min-h-[44px] text-[17px] leading-[1.3] font-semibold text-white transition-colors hover:text-accent-bronze-tint">
             {product.title}
           </h3>
         </Link>
@@ -308,7 +308,7 @@ export function ProductsSection() {
         </Reveal>
 
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.map((product, i) => (
               <ProductCard key={`${product.title}-${i}`} product={product} delay={(i % 3) * 90} />
             ))}
