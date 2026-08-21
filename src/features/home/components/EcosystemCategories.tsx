@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Badge } from '@/components/Badge'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
@@ -7,6 +8,7 @@ interface Category {
   description: string
   image: string
   imageClassName?: string
+  href?: string
 }
 
 const categories: Category[] = [
@@ -14,6 +16,7 @@ const categories: Category[] = [
     title: 'Hardware Marketplace',
     description: 'Browse and purchase mining hardware from verified vendors',
     image: '/figma/cards/hardware.png',
+    href: '/asic-machines',
   },
   {
     title: 'Energy Solutions',
@@ -58,9 +61,11 @@ export function EcosystemCategories() {
         />
 
         <div className="relative grid w-full max-w-[1320px] grid-cols-1 gap-x-5 gap-y-28 pt-20 sm:grid-cols-2 sm:gap-y-24 lg:grid-cols-4 lg:gap-y-5">
-          {categories.map((category, i) => (
-            <Reveal key={category.title} delay={i * 90} className="h-full">
-              <div className="group relative flex h-[330px] flex-col justify-end rounded-[28px] border border-white/4 bg-gradient-to-br from-[#515050] to-transparent px-6 pt-19 pb-6 text-left shadow-[0_0_6px_0_rgba(102,153,255,0.15),0_0_24px_0_rgba(102,153,255,0.35)] transition-all duration-300 hover:-translate-y-2 hover:border-white/10 hover:shadow-[0_0_10px_0_rgba(102,153,255,0.25),0_0_40px_0_rgba(102,153,255,0.5)]">
+          {categories.map((category, i) => {
+            const cardClassName =
+              'group relative flex h-[330px] flex-col justify-end rounded-[28px] border border-white/4 bg-gradient-to-br from-[#515050] to-transparent px-6 pt-19 pb-6 text-left shadow-[0_0_6px_0_rgba(102,153,255,0.15),0_0_24px_0_rgba(102,153,255,0.35)] transition-all duration-300 hover:-translate-y-2 hover:border-white/10 hover:shadow-[0_0_10px_0_rgba(102,153,255,0.25),0_0_40px_0_rgba(102,153,255,0.5)]'
+            const cardContent = (
+              <>
                 <img
                   src={category.image}
                   alt=""
@@ -79,9 +84,21 @@ export function EcosystemCategories() {
                     />
                   </span>
                 </div>
-              </div>
-            </Reveal>
-          ))}
+              </>
+            )
+
+            return (
+              <Reveal key={category.title} delay={i * 90} className="h-full">
+                {category.href ? (
+                  <Link to={category.href} className={cardClassName}>
+                    {cardContent}
+                  </Link>
+                ) : (
+                  <div className={cardClassName}>{cardContent}</div>
+                )}
+              </Reveal>
+            )
+          })}
         </div>
       </Container>
     </section>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Reveal } from '@/components/Reveal'
 import { WHATSAPP_LINK } from '@/lib/links'
 
@@ -46,10 +47,10 @@ export function CtaBanner() {
               <HeadsetIcon />
               Talk to human
             </a>
-            <button type="button" className="deployment-cta-button deployment-cta-products">
+            <Link to="/asic-machines" className="deployment-cta-button deployment-cta-products">
               <ArrowIcon />
               Explore Products
-            </button>
+            </Link>
           </div>
         </div>
       </Reveal>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Container } from '@/components/Container'
 import { WHATSAPP_LINK } from '@/lib/links'
 
@@ -55,13 +56,13 @@ export function Hero() {
               lifting a finger.
             </p>
             <div className="animate-fade-in-up flex flex-wrap items-center gap-3.5 pt-2" style={{ animationDelay: '240ms' }}>
-              <button
-                type="button"
+              <Link
+                to="/asic-machines"
                 className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:border-white/30 hover:bg-black/60 active:scale-95"
               >
                 <img src="/figma/hero/shopping-cart.svg" alt="" className="size-[14px]" />
                 Discover Machines
-              </button>
+              </Link>
               <a
                 href={WHATSAPP_LINK}
                 target="_blank"

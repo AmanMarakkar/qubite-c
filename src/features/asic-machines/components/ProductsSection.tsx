@@ -1,3 +1,4 @@
+import { useMemo, useState } from 'react'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
 import { WHATSAPP_LINK } from '@/lib/links'
@@ -10,6 +11,10 @@ import {
   WhatsAppIcon,
 } from './icons'
 
+type Category = 'Air Cooling Miners' | 'Hydro Cooling Miners' | 'Immersion Miners'
+type Brand = 'MicroBT' | 'Bitmain'
+type SortOption = 'None' | 'Price: Low to High' | 'Price: High to Low' | 'Hashrate'
+
 interface Product {
   title: string
   tag: string
@@ -21,6 +26,8 @@ interface Product {
   dailyProfit: string
   payback: string
   media: { type: 'image' | 'video'; src: string }
+  category: Category
+  brand: Brand
 }
 
 const baseProducts: Product[] = [
@@ -35,6 +42,8 @@ const baseProducts: Product[] = [
     dailyProfit: '+$3.92',
     payback: '954d',
     media: { type: 'image', src: '/asic/media/photo.png' },
+    category: 'Air Cooling Miners',
+    brand: 'MicroBT',
   },
   {
     title: 'Bitmain Antminer S21 XP (270TH)',
@@ -47,6 +56,8 @@ const baseProducts: Product[] = [
     dailyProfit: '+$8.10',
     payback: '839d',
     media: { type: 'video', src: '/asic/media/video-1.webm' },
+    category: 'Hydro Cooling Miners',
+    brand: 'Bitmain',
   },
   {
     title: 'Bitmain Antminer S21 Pro+ (234TH)',
@@ -59,10 +70,17 @@ const baseProducts: Product[] = [
     dailyProfit: '+$11.20',
     payback: '795d',
     media: { type: 'video', src: '/asic/media/video-2.webm' },
+    category: 'Immersion Miners',
+    brand: 'Bitmain',
   },
 ]
 
 const products: Product[] = [...baseProducts, ...baseProducts, ...baseProducts]
+
+function parseLeadingNumber(value: string): number {
+  const match = value.replace(/,/g, '').match(/[\d.]+/)
+  return match ? parseFloat(match[0]) : 0
+}
 
 const cardFont = { fontFamily: 'Inter, system-ui, sans-serif' }
 
@@ -237,6 +255,33 @@ function ProductCard({ product, delay }: { product: Product; delay: number }) {
 }
 
 export function ProductsSection() {
+  const [category, setCategory] = useState<Category | 'All'>('All')
+  const [brand, setBrand] = useState<Brand | 'All'>('All')
+  const [sort, setSort] = useState<SortOption>('None')
+  const [query, setQuery] = useState('')
+
+  const filteredProducts = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    const result = products.filter((product) => {
+      if (category !== 'All' && product.category !== category) return false
+      if (brand !== 'All' && product.brand !== brand) return false
+      if (q && !product.title.toLowerCase().includes(q) && !product.brand.toLowerCase().includes(q)) {
+        return false
+      }
+      return true
+    })
+
+    if (sort === 'Price: Low to High') {
+      result.sort((a, b) => parseLeadingNumber(a.price) - parseLeadingNumber(b.price))
+    } else if (sort === 'Price: High to Low') {
+      result.sort((a, b) => parseLeadingNumber(b.price) - parseLeadingNumber(a.price))
+    } else if (sort === 'Hashrate') {
+      result.sort((a, b) => parseLeadingNumber(b.hashrate) - parseLeadingNumber(a.hashrate))
+    }
+
+    return result
+  }, [category, brand, sort, query])
+
   return (
     <section className="relative overflow-hidden bg-bg">
       <div
@@ -262,10 +307,15 @@ export function ProductsSection() {
               <label className="flex flex-col gap-1.5">
                 <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">Category</span>
                 <div className="relative">
-                  <select className="w-full min-w-44 cursor-pointer appearance-none rounded-full border border-[rgba(255,255,255,0.1)] bg-[#17130f] py-2.5 pr-9 pl-4 text-sm text-white focus:border-accent-cyan/40 focus:outline-none">
-                    <option>Hydro Cooling Miners</option>
-                    <option>Air Cooling Miners</option>
-                    <option>Immersion Miners</option>
+                  <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value as Category | 'All')}
+                    className="w-full min-w-44 cursor-pointer appearance-none rounded-full border border-[rgba(255,255,255,0.1)] bg-[#17130f] py-2.5 pr-9 pl-4 text-sm text-white focus:border-accent-cyan/40 focus:outline-none"
+                  >
+                    <option value="All">All Categories</option>
+                    <option value="Hydro Cooling Miners">Hydro Cooling Miners</option>
+                    <option value="Air Cooling Miners">Air Cooling Miners</option>
+                    <option value="Immersion Miners">Immersion Miners</option>
                   </select>
                   <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-4 size-2.5 -translate-y-1/2 text-text-subtle" />
                 </div>
@@ -274,10 +324,14 @@ export function ProductsSection() {
               <label className="flex flex-col gap-1.5">
                 <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">Brand</span>
                 <div className="relative">
-                  <select className="w-full min-w-44 cursor-pointer appearance-none rounded-full border border-[rgba(255,255,255,0.1)] bg-[#17130f] py-2.5 pr-9 pl-4 text-sm text-white focus:border-accent-cyan/40 focus:outline-none">
-                    <option>Hydro Cooling Miners</option>
-                    <option>MicroBT</option>
-                    <option>Bitmain</option>
+                  <select
+                    value={brand}
+                    onChange={(e) => setBrand(e.target.value as Brand | 'All')}
+                    className="w-full min-w-44 cursor-pointer appearance-none rounded-full border border-[rgba(255,255,255,0.1)] bg-[#17130f] py-2.5 pr-9 pl-4 text-sm text-white focus:border-accent-cyan/40 focus:outline-none"
+                  >
+                    <option value="All">All Brands</option>
+                    <option value="MicroBT">MicroBT</option>
+                    <option value="Bitmain">Bitmain</option>
                   </select>
                   <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-4 size-2.5 -translate-y-1/2 text-text-subtle" />
                 </div>
@@ -286,11 +340,15 @@ export function ProductsSection() {
               <label className="flex flex-col gap-1.5">
                 <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">Sort</span>
                 <div className="relative">
-                  <select className="w-full min-w-32 cursor-pointer appearance-none rounded-full border border-[rgba(255,255,255,0.1)] bg-[#17130f] py-2.5 pr-9 pl-4 text-sm text-white focus:border-accent-cyan/40 focus:outline-none">
-                    <option>None</option>
-                    <option>Price: Low to High</option>
-                    <option>Price: High to Low</option>
-                    <option>Hashrate</option>
+                  <select
+                    value={sort}
+                    onChange={(e) => setSort(e.target.value as SortOption)}
+                    className="w-full min-w-32 cursor-pointer appearance-none rounded-full border border-[rgba(255,255,255,0.1)] bg-[#17130f] py-2.5 pr-9 pl-4 text-sm text-white focus:border-accent-cyan/40 focus:outline-none"
+                  >
+                    <option value="None">None</option>
+                    <option value="Price: Low to High">Price: Low to High</option>
+                    <option value="Price: High to Low">Price: High to Low</option>
+                    <option value="Hashrate">Hashrate</option>
                   </select>
                   <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-4 size-2.5 -translate-y-1/2 text-text-subtle" />
                 </div>
@@ -301,6 +359,8 @@ export function ProductsSection() {
               <SearchIcon className="absolute top-1/2 left-4 size-4 -translate-y-1/2 text-text-subtle" />
               <input
                 type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search products..."
                 className="w-full rounded-full border border-[rgba(255,255,255,0.1)] bg-[#17130f] py-2.5 pr-4 pl-10 text-sm text-white placeholder:text-text-faint focus:border-accent-cyan/40 focus:outline-none"
               />
@@ -308,11 +368,18 @@ export function ProductsSection() {
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {products.map((product, i) => (
-            <ProductCard key={`${product.title}-${i}`} product={product} delay={(i % 3) * 90} />
-          ))}
-        </div>
+        {filteredProducts.length > 0 ? (
+          <div className="grid grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {filteredProducts.map((product, i) => (
+              <ProductCard key={`${product.title}-${i}`} product={product} delay={(i % 3) * 90} />
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center gap-2 rounded-2xl border border-white/8 bg-white/3 py-16 text-center">
+            <p className="text-sm font-semibold text-white">No products match your filters</p>
+            <p className="text-xs text-text-subtle">Try a different category, brand, or search term.</p>
+          </div>
+        )}
       </Container>
     </section>
   )
