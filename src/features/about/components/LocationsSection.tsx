@@ -12,8 +12,6 @@ const stats = [
 const uaeSites = [
   { name: 'Nahil', photo: '/locations/abu-dhabi-building.webp' },
   { name: 'Mafraq', photo: '/locations/abu-dhabi-hall.webp' },
-  { name: 'Khaznah', photo: '/locations/abu-dhabi-container.webp' },
-  { name: 'Al Hayer', photo: '/locations/abu-dhabi-racks.webp' },
 ]
 
 const lifecycle = ['Consultation', 'Hardware', 'Import', 'Installation', 'Monitoring', 'Support']
@@ -89,7 +87,7 @@ export function LocationsSection() {
           <h3 className="text-lg font-bold text-white">Our UAE Sites</h3>
         </Reveal>
 
-        <div className="mt-4 grid w-full max-w-[1000px] grid-cols-2 gap-4 lg:grid-cols-4">
+        <div className="mt-4 grid w-full max-w-[500px] grid-cols-2 gap-4">
           {uaeSites.map((site, i) => (
             <Reveal key={site.name} delay={460 + i * 80}>
               <div className="group relative aspect-square overflow-hidden rounded-2xl border border-white/8">

@@ -3,7 +3,7 @@ import { Reveal } from '@/components/Reveal'
 const locations = [
   { title: 'UAE', place: 'Dubai' },
   { title: 'Germany', place: 'Europe' },
-  { title: 'Swiss', place: 'Zurich' },
+  { title: 'Switzerland', place: 'Zurich' },
 ]
 
 export function GlobalInfrastructure() {

@@ -189,11 +189,21 @@ export function WhyChooseUs() {
 
       <div className="relative mx-auto grid w-full max-w-[1080px] grid-cols-1 items-center gap-10 px-5 pb-20 sm:w-[81%] sm:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] sm:gap-[clamp(36px,3.5vw,48px)] sm:px-0 sm:pb-[clamp(44px,5.85vw,80px)]">
         <Reveal className="flex justify-center sm:justify-start">
-          <img
-            src="/figma/resilience/portrait.png"
-            alt="Qubite compute infrastructure"
-            className="h-auto w-full max-w-[440px] object-contain drop-shadow-[0_0_46px_rgba(0,229,255,0.18)]"
-          />
+          <div
+            className="relative w-full max-w-[440px] overflow-hidden rounded-3xl border border-white/10"
+            style={{ boxShadow: '0 0 46px rgba(0,229,255,0.18)' }}
+          >
+            <img
+              src="/facilities/site-1.png"
+              alt="Qubite GPU compute rack"
+              className="aspect-[3/4] w-full object-cover [object-position:15%_center]"
+            />
+            <div
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-24"
+              style={{ background: 'linear-gradient(to bottom, transparent, rgba(0,0,0,0.55))' }}
+              aria-hidden="true"
+            />
+          </div>
         </Reveal>
 
         <div className="flex flex-col gap-5 text-left sm:gap-[clamp(14px,1.46vw,20px)]">

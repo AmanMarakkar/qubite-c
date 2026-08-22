@@ -2,17 +2,20 @@ import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
 
 const photos = [
-  '/facilities/facility-1.png',
-  '/facilities/facility-2.png',
-  '/facilities/facility-3.png',
-  '/facilities/facility-4.png',
-  '/facilities/facility-5.png',
-  '/facilities/facility-6.png',
-  '/facilities/facility-7.png',
+  '/facilities/site-1.png',
+  '/facilities/site-2.png',
+  '/facilities/site-3.png',
+  '/facilities/site-5.png',
+  '/facilities/site-6.png',
+  '/facilities/site-7.png',
+  '/facilities/site-8.png',
+  '/facilities/site-9.png',
+  '/facilities/site-10.png',
+  '/facilities/site-11.png',
+  '/facilities/site-12.png',
+  // repeated to complete the 4x3 grid — swap for a 12th real photo when available
+  '/facilities/site-1.png',
 ]
-
-// 12 tiles for a clean 4x3 grid, cycling through the 7 real facility photos.
-const grid = Array.from({ length: 12 }, (_, i) => photos[i % photos.length])
 
 export function FacilitiesGallery() {
   return (
@@ -42,10 +45,13 @@ export function FacilitiesGallery() {
           <h2 className="text-[28px] font-bold text-white sm:text-[34px]">Where your machines live &amp; earn</h2>
         </Reveal>
 
-        <Reveal delay={160} className="mt-8 w-full">
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-            {grid.map((src, i) => (
-              <div key={i} className="group aspect-[4/3] overflow-hidden rounded-xl">
+        <Reveal delay={160} className="mt-10 w-full">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4 lg:gap-6">
+            {photos.map((src, i) => (
+              <div
+                key={`${src}-${i}`}
+                className="group aspect-[4/3] overflow-hidden rounded-2xl border border-white/8 transition-all duration-300 hover:border-white/20"
+              >
                 <img
                   src={src}
                   alt=""
