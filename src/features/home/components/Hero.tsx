@@ -1,3 +1,5 @@
+import { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Container } from '@/components/Container'
 import { WHATSAPP_LINK } from '@/lib/links'
@@ -28,8 +30,15 @@ function CoinIcon({ className = 'size-3.5' }: { className?: string }) {
 }
 
 export function Hero() {
+  const { t } = useTranslation()
+  const sectionRef = useRef<HTMLElement>(null)
+
+  const scrollToNext = () => {
+    sectionRef.current?.nextElementSibling?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
-    <section className="relative overflow-hidden bg-black">
+    <section ref={sectionRef} className="relative overflow-hidden bg-black">
       <div className="absolute inset-0 bg-[#050301]" aria-hidden="true" />
       <img
         src="/figma/hero/hero-bg.png"
@@ -43,17 +52,15 @@ export function Hero() {
         <div className="grid w-full items-center gap-12 lg:grid-cols-[1.5fr_1fr] 2xl:gap-20">
           <div className="flex max-w-[820px] flex-col gap-5 2xl:max-w-[900px]">
             <h1 className="animate-fade-in-up font-display text-[44px] leading-[1.05] font-black tracking-tight text-white md:text-[64px]">
-              Powering the
+              {t('home.hero.heading1')}
               <br />
-              Future of Mining
+              {t('home.hero.heading2')}
             </h1>
             <p
               className="animate-fade-in-up max-w-[520px] text-base leading-relaxed text-white md:text-18"
               style={{ animationDelay: '120ms' }}
             >
-              Qubite supplies tax-advantaged mining and GPU servers, installs them in low-cost-power
-              facilities, and operates them around the clock, so you earn predictable income without
-              lifting a finger.
+              {t('home.hero.paragraph')}
             </p>
             <div className="animate-fade-in-up flex flex-wrap items-center gap-3.5 pt-2" style={{ animationDelay: '240ms' }}>
               <Link
@@ -61,7 +68,7 @@ export function Hero() {
                 className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:border-white/30 hover:bg-black/60 active:scale-95"
               >
                 <img src="/figma/hero/shopping-cart.svg" alt="" className="size-[14px]" />
-                Discover Machines
+                {t('home.hero.discoverMachines')}
               </Link>
               <a
                 href={WHATSAPP_LINK}
@@ -70,7 +77,7 @@ export function Hero() {
                 className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:border-white/30 hover:bg-black/60 active:scale-95"
               >
                 <HeadsetIcon className="size-[14px]" />
-                Talk to human
+                {t('home.hero.talkToHuman')}
               </a>
             </div>
           </div>
@@ -99,10 +106,10 @@ export function Hero() {
               <div className="flex items-center justify-between">
                 <span className="flex items-center gap-2 text-sm font-semibold text-text-dim">
                   <CoinIcon className="size-4 text-accent-bronze-tint" />
-                  Your investment
+                  {t('home.hero.investmentCard.yourInvestment')}
                 </span>
                 <span className="rounded-full bg-accent-green/10 px-2 py-1 text-xs font-semibold text-accent-green">
-                  Active Pool
+                  {t('home.hero.investmentCard.activePool')}
                 </span>
               </div>
               <span className="text-40 font-extrabold text-white">$25,000</span>
@@ -133,26 +140,35 @@ export function Hero() {
               <div className="flex items-center justify-between">
                 <span className="flex items-center gap-2 text-sm font-semibold text-text-dim">
                   <CoinIcon className="size-4 text-accent-bronze-tint" />
-                  Profitability
+                  {t('home.hero.profitabilityCard.profitability')}
                 </span>
                 <span className="rounded-full bg-accent-green/10 px-2 py-1 text-xs font-semibold text-accent-green">
                   +26%
                 </span>
               </div>
               <span className="text-40 font-extrabold text-white">$728.56</span>
-              <span className="text-xs text-text-subtle">Since 3 months</span>
+              <span className="text-xs text-text-subtle">{t('home.hero.profitabilityCard.since')}</span>
             </div>
           </div>
         </div>
       </Container>
 
       <div className="absolute inset-x-0 bottom-0 hidden items-center justify-between px-5 py-6 sm:px-10 lg:flex lg:px-20">
-        <span className="group flex cursor-default items-center gap-2 text-xs font-semibold tracking-wide text-text-dim uppercase transition-colors hover:text-white">
-          Scroll
+        <button
+          type="button"
+          onClick={scrollToNext}
+          className="group flex cursor-pointer items-center gap-2 text-xs font-semibold tracking-wide text-text-dim uppercase transition-colors hover:text-white"
+        >
+          {t('home.hero.scroll')}
           <img src="/figma/hero/arrow-down.svg" alt="" className="size-3.5 animate-bounce" />
-        </span>
-        <span className="flex items-center gap-4 text-[13px] text-text-dim">
-          Meet with 10+ infrastructure experts
+        </button>
+        <a
+          href={WHATSAPP_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-4 text-[13px] text-text-dim transition-colors hover:text-white"
+        >
+          {t('home.hero.meetExperts')}
           <span className="flex items-center">
             <span className="flex -space-x-2">
               {avatars.map((src, i) => (
@@ -165,9 +181,9 @@ export function Hero() {
                 />
               ))}
             </span>
-            <span className="pl-3 text-[13px] font-semibold text-white">Mining experts</span>
+            <span className="pl-3 text-[13px] font-semibold text-white">{t('home.hero.miningExperts')}</span>
           </span>
-        </span>
+        </a>
       </div>
     </section>
   )

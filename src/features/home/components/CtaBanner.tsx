@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Reveal } from '@/components/Reveal'
 import { WHATSAPP_LINK } from '@/lib/links'
@@ -25,16 +26,15 @@ function ArrowIcon() {
 }
 
 export function CtaBanner() {
+  const { t } = useTranslation()
+
   return (
     <section className="deployment-cta-section">
       <Reveal className="deployment-cta-reveal">
         <div className="deployment-cta-banner">
           <div className="deployment-cta-copy">
-            <h2>Ready to deploy?</h2>
-            <p>
-              Tell us your target hashrate and timeline — we&apos;ll come back with a site, power, and
-              hardware plan.
-            </p>
+            <h2>{t('home.ctaBanner.heading')}</h2>
+            <p>{t('home.ctaBanner.paragraph')}</p>
           </div>
 
           <div className="deployment-cta-actions">
@@ -45,11 +45,11 @@ export function CtaBanner() {
               className="deployment-cta-button deployment-cta-human"
             >
               <HeadsetIcon />
-              Talk to human
+              {t('home.ctaBanner.talkToHuman')}
             </a>
             <Link to="/asic-machines" className="deployment-cta-button deployment-cta-products">
               <ArrowIcon />
-              Explore Products
+              {t('home.ctaBanner.exploreProducts')}
             </Link>
           </div>
         </div>

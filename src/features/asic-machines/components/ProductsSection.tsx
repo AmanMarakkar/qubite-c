@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
@@ -42,6 +43,7 @@ function ProductMedia({ media }: { media: Product['media'] }) {
 }
 
 function ProductCard({ product, delay }: { product: Product; delay: number }) {
+  const { t } = useTranslation()
   const inStock = product.status === 'In Stock'
 
   return (
@@ -85,7 +87,7 @@ function ProductCard({ product, delay }: { product: Product; delay: number }) {
                 : 'border-[rgba(248,113,113,0.3)] bg-[rgba(239,68,68,0.12)] text-[#f87171]'
             }`}
           >
-            {inStock ? 'In Stock' : 'No Stock'}
+            {inStock ? t('asicMachines.products.inStock') : t('asicMachines.products.noStock')}
           </span>
 
           {/* glowing diamond platform */}
@@ -132,21 +134,21 @@ function ProductCard({ product, delay }: { product: Product; delay: number }) {
           <div className="relative flex flex-col items-center gap-1 after:absolute after:top-[15%] after:right-0 after:h-[70%] after:w-px after:bg-[rgba(255,255,255,0.08)] after:content-['']">
             <span className="flex items-center gap-1 text-[10px] font-medium tracking-[0.04em] text-[#6b7280] uppercase">
               <HashrateIcon className="size-3 text-[#22d3ee]" />
-              Hashrate
+              {t('asicMachines.products.hashrate')}
             </span>
             <span className="mt-1 text-[14px] font-semibold tabular-nums text-white">{product.hashrate}</span>
           </div>
           <div className="relative flex flex-col items-center gap-1 after:absolute after:top-[15%] after:right-0 after:h-[70%] after:w-px after:bg-[rgba(255,255,255,0.08)] after:content-['']">
             <span className="flex items-center gap-1 text-[10px] font-medium tracking-[0.04em] text-[#6b7280] uppercase">
               <EfficiencyIcon className="size-3 text-[#facc15]" />
-              Efficiency
+              {t('asicMachines.products.efficiency')}
             </span>
             <span className="mt-1 text-[14px] font-semibold tabular-nums text-white">{product.efficiency}</span>
           </div>
           <div className="flex flex-col items-center gap-1">
             <span className="flex items-center gap-1 text-[10px] font-medium tracking-[0.04em] text-[#6b7280] uppercase">
               <PowerIcon className="size-3 text-[#4ade80]" />
-              Power
+              {t('asicMachines.products.power')}
             </span>
             <span className="mt-1 text-[14px] font-semibold tabular-nums text-white">{product.power}</span>
           </div>
@@ -160,11 +162,11 @@ function ProductCard({ product, delay }: { product: Product; delay: number }) {
           }}
         >
           <div className="flex flex-col gap-1">
-            <span className="text-[10px] tracking-[0.04em] text-[#6b7280] uppercase">Est. Daily Profit</span>
+            <span className="text-[10px] tracking-[0.04em] text-[#6b7280] uppercase">{t('asicMachines.products.estDailyProfit')}</span>
             <span className="text-[15px] font-bold tabular-nums text-[#4ade80]">{product.dailyProfit}</span>
           </div>
           <div className="flex flex-col gap-1">
-            <span className="text-[10px] tracking-[0.04em] text-[#6b7280] uppercase">Payback</span>
+            <span className="text-[10px] tracking-[0.04em] text-[#6b7280] uppercase">{t('asicMachines.products.payback')}</span>
             <span className="text-[15px] font-bold tabular-nums text-[#6ee7a0]">{product.payback}</span>
           </div>
         </div>
@@ -179,13 +181,13 @@ function ProductCard({ product, delay }: { product: Product; delay: number }) {
             style={{ boxShadow: '0 4px 14px rgba(34,197,94,0.3)' }}
           >
             <WhatsAppIcon className="size-3.5" />
-            WhatsApp
+            {t('asicMachines.products.whatsapp')}
           </a>
           <Link
             to={`/asic-machines/${product.slug}`}
             className="flex-1 rounded-full border border-white/15 py-3 text-center text-[13px] font-bold tracking-[0.03em] text-white uppercase transition-all duration-200 hover:border-white/40 hover:bg-white/5 active:scale-95"
           >
-            View Details
+            {t('asicMachines.products.viewDetails')}
           </Link>
         </div>
       </div>
@@ -194,6 +196,7 @@ function ProductCard({ product, delay }: { product: Product; delay: number }) {
 }
 
 export function ProductsSection() {
+  const { t } = useTranslation()
   const [category, setCategory] = useState<Category | 'All'>('All')
   const [brand, setBrand] = useState<Brand | 'All'>('All')
   const [sort, setSort] = useState<SortOption>('None')
@@ -235,8 +238,8 @@ export function ProductsSection() {
       <Container className="relative flex flex-col gap-8 py-16">
         <Reveal>
           <div className="flex flex-col gap-1 text-left">
-            <h2 className="text-2xl font-bold text-white">All Products</h2>
-            <p className="text-sm text-text-subtle">Browse our full product catalog</p>
+            <h2 className="text-2xl font-bold text-white">{t('asicMachines.products.heading')}</h2>
+            <p className="text-sm text-text-subtle">{t('asicMachines.products.subheading')}</p>
           </div>
         </Reveal>
 
@@ -244,31 +247,31 @@ export function ProductsSection() {
           <div className="flex flex-col gap-4 rounded-2xl border border-white/8 bg-white/3 p-4 md:flex-row md:items-center md:justify-between">
             <div className="flex flex-wrap gap-4 sm:items-center">
               <label className="flex flex-col gap-1.5">
-                <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">Category</span>
+                <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">{t('asicMachines.products.category')}</span>
                 <div className="relative">
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value as Category | 'All')}
                     className="w-full min-w-44 cursor-pointer appearance-none rounded-full border border-[rgba(255,255,255,0.1)] bg-[#17130f] py-2.5 pr-9 pl-4 text-sm text-white focus:border-accent-cyan/40 focus:outline-none"
                   >
-                    <option value="All">All Categories</option>
-                    <option value="Hydro Cooling Miners">Hydro Cooling Miners</option>
-                    <option value="Air Cooling Miners">Air Cooling Miners</option>
-                    <option value="Immersion Miners">Immersion Miners</option>
+                    <option value="All">{t('asicMachines.products.allCategories')}</option>
+                    <option value="Hydro Cooling Miners">{t('asicMachines.products.categories.hydro')}</option>
+                    <option value="Air Cooling Miners">{t('asicMachines.products.categories.air')}</option>
+                    <option value="Immersion Miners">{t('asicMachines.products.categories.immersion')}</option>
                   </select>
                   <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-4 size-2.5 -translate-y-1/2 text-text-subtle" />
                 </div>
               </label>
 
               <label className="flex flex-col gap-1.5">
-                <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">Brand</span>
+                <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">{t('asicMachines.products.brand')}</span>
                 <div className="relative">
                   <select
                     value={brand}
                     onChange={(e) => setBrand(e.target.value as Brand | 'All')}
                     className="w-full min-w-44 cursor-pointer appearance-none rounded-full border border-[rgba(255,255,255,0.1)] bg-[#17130f] py-2.5 pr-9 pl-4 text-sm text-white focus:border-accent-cyan/40 focus:outline-none"
                   >
-                    <option value="All">All Brands</option>
+                    <option value="All">{t('asicMachines.products.allBrands')}</option>
                     <option value="MicroBT">MicroBT</option>
                     <option value="Bitmain">Bitmain</option>
                   </select>
@@ -277,17 +280,17 @@ export function ProductsSection() {
               </label>
 
               <label className="flex flex-col gap-1.5">
-                <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">Sort</span>
+                <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">{t('asicMachines.products.sort')}</span>
                 <div className="relative">
                   <select
                     value={sort}
                     onChange={(e) => setSort(e.target.value as SortOption)}
                     className="w-full min-w-32 cursor-pointer appearance-none rounded-full border border-[rgba(255,255,255,0.1)] bg-[#17130f] py-2.5 pr-9 pl-4 text-sm text-white focus:border-accent-cyan/40 focus:outline-none"
                   >
-                    <option value="None">None</option>
-                    <option value="Price: Low to High">Price: Low to High</option>
-                    <option value="Price: High to Low">Price: High to Low</option>
-                    <option value="Hashrate">Hashrate</option>
+                    <option value="None">{t('asicMachines.products.sortOptions.none')}</option>
+                    <option value="Price: Low to High">{t('asicMachines.products.sortOptions.priceLow')}</option>
+                    <option value="Price: High to Low">{t('asicMachines.products.sortOptions.priceHigh')}</option>
+                    <option value="Hashrate">{t('asicMachines.products.sortOptions.hashrate')}</option>
                   </select>
                   <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-4 size-2.5 -translate-y-1/2 text-text-subtle" />
                 </div>
@@ -300,7 +303,7 @@ export function ProductsSection() {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search products..."
+                placeholder={t('asicMachines.products.searchPlaceholder')}
                 className="w-full rounded-full border border-[rgba(255,255,255,0.1)] bg-[#17130f] py-2.5 pr-4 pl-10 text-sm text-white placeholder:text-text-faint focus:border-accent-cyan/40 focus:outline-none"
               />
             </div>
@@ -315,8 +318,8 @@ export function ProductsSection() {
           </div>
         ) : (
           <div className="flex flex-col items-center gap-2 rounded-2xl border border-white/8 bg-white/3 py-16 text-center">
-            <p className="text-sm font-semibold text-white">No products match your filters</p>
-            <p className="text-xs text-text-subtle">Try a different category, brand, or search term.</p>
+            <p className="text-sm font-semibold text-white">{t('asicMachines.products.noResultsTitle')}</p>
+            <p className="text-xs text-text-subtle">{t('asicMachines.products.noResultsSubtitle')}</p>
           </div>
         )}
       </Container>

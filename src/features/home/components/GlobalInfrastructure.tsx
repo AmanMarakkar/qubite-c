@@ -1,12 +1,10 @@
+import { useTranslation } from 'react-i18next'
 import { Reveal } from '@/components/Reveal'
 
-const locations = [
-  { title: 'UAE', place: 'Dubai' },
-  { title: 'Germany', place: 'Europe' },
-  { title: 'Switzerland', place: 'Zurich' },
-]
-
 export function GlobalInfrastructure() {
+  const { t } = useTranslation()
+  const locations = t('home.globalInfrastructure.locations', { returnObjects: true }) as { title: string; place: string }[]
+
   return (
     <section className="global-infrastructure-section">
       <img
@@ -22,24 +20,21 @@ export function GlobalInfrastructure() {
           <Reveal>
             <span className="global-infrastructure-badge">
               <span />
-              Ecosystem Categories
+              {t('home.globalInfrastructure.badge')}
             </span>
           </Reveal>
 
           <Reveal delay={80}>
-            <h2>Global Mining Infrastructure</h2>
+            <h2>{t('home.globalInfrastructure.heading')}</h2>
           </Reveal>
 
           <Reveal delay={160}>
-            <p>
-              Strategic deployment across six countries, with continuous monitoring and industry-
-              <br className="hidden sm:block" />leading uptime.
-            </p>
+            <p>{t('home.globalInfrastructure.paragraph')}</p>
           </Reveal>
         </div>
 
         <Reveal delay={220} className="global-infrastructure-filter-wrap">
-          <span className="global-infrastructure-filter">All Locations</span>
+          <span className="global-infrastructure-filter">{t('home.globalInfrastructure.allLocations')}</span>
         </Reveal>
 
         <div className="global-infrastructure-cards">
@@ -49,7 +44,7 @@ export function GlobalInfrastructure() {
                 <div className="global-infrastructure-card-glow" aria-hidden="true" />
 
                 <div className="global-infrastructure-status">
-                  <span>Operational</span>
+                  <span>{t('home.globalInfrastructure.operational')}</span>
                   <i />
                 </div>
 

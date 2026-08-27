@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
 import { WHATSAPP_LINK } from '@/lib/links'
@@ -17,6 +18,8 @@ function HeadsetIcon({ className = 'size-4' }: { className?: string }) {
 }
 
 export function HostingCta() {
+  const { t } = useTranslation()
+
   return (
     <section className="bg-black py-24">
       <Container>
@@ -30,13 +33,8 @@ export function HostingCta() {
               className="pointer-events-none absolute inset-0"
               style={{ background: 'radial-gradient(ellipse 60% 80% at 50% 0%, rgba(232,167,101,0.15), transparent 70%)' }}
             />
-            <h2 className="relative text-[28px] font-bold text-white sm:text-[34px]">
-              Ready to price your hosting slots?
-            </h2>
-            <p className="relative max-w-[520px] text-sm text-text-dim">
-              Tell us your machine count and target power, and our team will confirm rate and
-              availability within one business day.
-            </p>
+            <h2 className="relative text-[28px] font-bold text-white sm:text-[34px]">{t('hosting.cta.heading')}</h2>
+            <p className="relative max-w-[520px] text-sm text-text-dim">{t('hosting.cta.paragraph')}</p>
             <div className="relative flex flex-wrap items-center justify-center gap-3.5">
               <a
                 href={WHATSAPP_LINK}
@@ -45,13 +43,13 @@ export function HostingCta() {
                 className="inline-flex items-center gap-2 rounded-full bg-accent-bronze px-6 py-3 text-sm font-bold text-white drop-shadow-[0_0_6px_rgba(255,255,255,0.6)] transition-all duration-200 hover:brightness-110 active:scale-95"
               >
                 <HeadsetIcon />
-                Talk to a human
+                {t('hosting.cta.talkToHuman')}
               </a>
               <a
                 href="#plans"
                 className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:border-white/30 hover:bg-black/60 active:scale-95"
               >
-                Compare plans again
+                {t('hosting.cta.comparePlansAgain')}
               </a>
             </div>
           </div>

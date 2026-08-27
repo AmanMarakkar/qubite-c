@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Reveal } from '@/components/Reveal'
 import { WHATSAPP_LINK } from '@/lib/links'
 
@@ -94,59 +95,24 @@ function HeadsetIcon({ className = 'size-3.5' }: { className?: string }) {
   )
 }
 
-const features = [
-  {
-    icon: ReceiptIcon,
-    tone: 'text-[#e8a765] border-[#e8a765]/30 bg-[#e8a765]/10',
-    surface: 'bg-[rgba(33,48,44,0.72)]',
-    title: 'Predictable Costs',
-    description: 'Fixed hosting and energy rates with no hidden fees. Know exactly what you pay, every month.',
-  },
-  {
-    icon: TrendIcon,
-    tone: 'text-[#2dd4bf] border-[#2dd4bf]/30 bg-[#2dd4bf]/10',
-    surface: 'bg-[rgba(0,58,57,0.62)]',
-    title: 'Profitable investment',
-    description: 'Bulk purchasing power means industry-low hardware and energy costs — maximizing your mining ROI.',
-  },
-  {
-    icon: ShieldIcon,
-    tone: 'text-[#2dd4bf] border-[#2dd4bf]/30 bg-[#2dd4bf]/10',
-    surface: 'bg-[rgba(0,68,64,0.72)]',
-    title: 'Specialist-Led Operations',
-    description: 'Our certified blockchain engineers keep every miner running at peak performance, 24/7.',
-  },
-  {
-    icon: WalletIcon,
-    tone: 'text-[#e8a765] border-[#e8a765]/30 bg-[#e8a765]/10',
-    surface: 'bg-[rgba(33,48,44,0.72)]',
-    title: 'Direct Payouts',
-    description: 'Crypto goes straight to your wallet — zero commissions, zero middlemen. Every coin is yours.',
-  },
+const featureStyles = [
+  { icon: ReceiptIcon, tone: 'text-[#e8a765] border-[#e8a765]/30 bg-[#e8a765]/10', surface: 'bg-[rgba(33,48,44,0.72)]' },
+  { icon: TrendIcon, tone: 'text-[#2dd4bf] border-[#2dd4bf]/30 bg-[#2dd4bf]/10', surface: 'bg-[rgba(0,58,57,0.62)]' },
+  { icon: ShieldIcon, tone: 'text-[#2dd4bf] border-[#2dd4bf]/30 bg-[#2dd4bf]/10', surface: 'bg-[rgba(0,68,64,0.72)]' },
+  { icon: WalletIcon, tone: 'text-[#e8a765] border-[#e8a765]/30 bg-[#e8a765]/10', surface: 'bg-[rgba(33,48,44,0.72)]' },
 ]
 
-const verticals = [
-  {
-    icon: BrainIcon,
-    tone: 'text-[#e8a765] border-[#e8a765]/30',
-    title: 'AI & Machine Learning',
-    subtitle: 'GPU clusters for training and inference',
-  },
-  {
-    icon: PickaxeIcon,
-    tone: 'text-[#2dd4bf] border-[#2dd4bf]/30',
-    title: 'Crypto Mining',
-    subtitle: 'Professional mining with solar power',
-  },
-  {
-    icon: CloudIcon,
-    tone: 'text-[#60a5fa] border-[#60a5fa]/30',
-    title: 'Cloud Computing',
-    subtitle: 'Enterprise hosting worldwide',
-  },
+const verticalStyles = [
+  { icon: BrainIcon, tone: 'text-[#e8a765] border-[#e8a765]/30' },
+  { icon: PickaxeIcon, tone: 'text-[#2dd4bf] border-[#2dd4bf]/30' },
+  { icon: CloudIcon, tone: 'text-[#60a5fa] border-[#60a5fa]/30' },
 ]
 
 export function WhyChooseUs() {
+  const { t } = useTranslation()
+  const features = t('home.whyChooseUs.features', { returnObjects: true }) as { title: string; description: string }[]
+  const verticals = t('home.whyChooseUs.verticals', { returnObjects: true }) as { title: string; subtitle: string }[]
+
   return (
     <section className="relative overflow-hidden bg-black">
       <div className="absolute inset-x-0 top-0 h-[310px] overflow-hidden sm:h-[200px] lg:h-[clamp(300px,22vw,420px)]" aria-hidden="true">
@@ -170,15 +136,15 @@ export function WhyChooseUs() {
           <div className="flex flex-col items-center gap-2">
             <TickMark />
             <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(45,212,191,0.3)] bg-[rgba(20,60,55,0.4)] px-3 py-1 text-[10px] font-bold tracking-[0.08em] text-[#2dd4bf] uppercase">
-              + Why Choose Us
+              {t('home.whyChooseUs.badge')}
             </span>
           </div>
         </Reveal>
         <Reveal delay={80}>
           <h2 className="max-w-[760px] text-[28px] leading-[1.12] font-extrabold text-white sm:max-w-[clamp(400px,55.6vw,760px)] sm:text-[clamp(21px,2.93vw,40px)]">
-            The infrastructure partner for{' '}
+            {t('home.whyChooseUs.heading1')}{' '}
             <span style={{ backgroundImage: GRADIENT }} className="bg-clip-text text-transparent">
-              modern computing power
+              {t('home.whyChooseUs.heading2')}
             </span>
           </h2>
         </Reveal>
@@ -209,18 +175,18 @@ export function WhyChooseUs() {
         <div className="flex flex-col gap-5 text-left sm:gap-[clamp(14px,1.46vw,20px)]">
           <Reveal>
             <p className="text-sm leading-relaxed text-text-dim sm:text-[clamp(8px,1.03vw,14px)]">
-              Qubite enables companies, investors and operators reliable access to high-performance
-              compute infrastructure — predictable, legally secure and scalable.
+              {t('home.whyChooseUs.paragraph')}
             </p>
           </Reveal>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-[clamp(10px,1.17vw,16px)]">
             {features.map((feature, i) => {
-              const Icon = feature.icon
+              const style = featureStyles[i]
+              const Icon = style.icon
               return (
                 <Reveal key={feature.title} delay={80 + i * 80}>
-                  <div className={`flex h-full min-h-[168px] flex-col gap-3 rounded-xl border border-white/6 p-5 sm:min-h-[clamp(99px,12.3vw,168px)] sm:gap-[clamp(7px,0.88vw,12px)] sm:p-[clamp(10px,1.46vw,20px)] ${feature.surface}`}>
-                    <span className={`flex size-8 items-center justify-center rounded-lg border sm:size-[clamp(22px,2.34vw,32px)] ${feature.tone}`}>
+                  <div className={`flex h-full min-h-[168px] flex-col gap-3 rounded-xl border border-white/6 p-5 sm:min-h-[clamp(99px,12.3vw,168px)] sm:gap-[clamp(7px,0.88vw,12px)] sm:p-[clamp(10px,1.46vw,20px)] ${style.surface}`}>
+                    <span className={`flex size-8 items-center justify-center rounded-lg border sm:size-[clamp(22px,2.34vw,32px)] ${style.tone}`}>
                       <Icon className="size-4 sm:size-[clamp(11px,1.17vw,16px)]" />
                     </span>
                     <h3 className="text-sm font-bold text-white sm:text-[clamp(10px,1.03vw,14px)]">{feature.title}</h3>
@@ -233,11 +199,12 @@ export function WhyChooseUs() {
 
           <Reveal delay={420}>
             <div className="grid grid-cols-1 gap-4 pt-1 sm:grid-cols-3 sm:gap-[clamp(8px,0.88vw,12px)] sm:pt-0">
-              {verticals.map((vertical) => {
-                const Icon = vertical.icon
+              {verticals.map((vertical, i) => {
+                const style = verticalStyles[i]
+                const Icon = style.icon
                 return (
                   <div key={vertical.title} className="flex items-center gap-2.5 sm:gap-[clamp(5px,0.73vw,10px)]">
-                    <span className={`flex size-7 shrink-0 items-center justify-center rounded-full border sm:size-[clamp(16px,2.05vw,28px)] ${vertical.tone}`}>
+                    <span className={`flex size-7 shrink-0 items-center justify-center rounded-full border sm:size-[clamp(16px,2.05vw,28px)] ${style.tone}`}>
                       <Icon className="size-3.5 sm:size-[clamp(8px,1.03vw,14px)]" />
                     </span>
                     <span className="flex flex-col">
@@ -259,7 +226,7 @@ export function WhyChooseUs() {
               style={{ boxShadow: '0 0 30px rgba(232,167,101,0.25)' }}
             >
               <HeadsetIcon className="size-4 text-[#e8a765]" />
-              Talk to human
+              {t('home.whyChooseUs.talkToHuman')}
             </a>
           </Reveal>
         </div>

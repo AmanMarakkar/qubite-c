@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
 
@@ -60,37 +61,30 @@ function TruckIcon({ className = 'size-4' }: { className?: string }) {
   )
 }
 
-const included = [
-  { icon: BoltIcon, title: 'Power delivery & metering', description: 'Redundant feeds with per-rack metering so your billing is always accurate.' },
-  { icon: RackIcon, title: 'Rack space & racking', description: 'Pre-provisioned, high-density rack space engineered for your machine type.' },
-  { icon: SnowflakeIcon, title: 'Cooling infrastructure', description: 'Air, hydro, or immersion cooling matched to each plan’s machine types.' },
-  { icon: MonitorIcon, title: '24/7 monitoring & alerts', description: 'Real-time hashrate and uptime monitoring with instant alerting on any drop.' },
-  { icon: ShieldIcon, title: 'Physical security', description: 'Access-controlled facilities with continuous surveillance and on-site staff.' },
-  { icon: TruckIcon, title: 'Deployment coordination', description: 'We handle receiving, unboxing, and rack-mounting from the moment your hardware arrives.' },
-]
+const includedIcons = [BoltIcon, RackIcon, SnowflakeIcon, MonitorIcon, ShieldIcon, TruckIcon]
 
 export function WhatsIncluded() {
+  const { t } = useTranslation()
+  const included = t('hosting.whatsIncluded.items', { returnObjects: true }) as { title: string; description: string }[]
+
   return (
     <section className="relative overflow-hidden bg-black py-24">
       <Container className="relative flex flex-col items-center gap-4 text-center">
         <Reveal>
           <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(45,212,191,0.3)] bg-[rgba(20,60,55,0.4)] px-4 py-1.5 text-[10px] font-bold tracking-[0.08em] text-[#2dd4bf] uppercase">
-            What&apos;s Included
+            {t('hosting.whatsIncluded.badge')}
           </span>
         </Reveal>
         <Reveal delay={80}>
-          <h2 className="text-[28px] font-bold text-white sm:text-[34px]">Every plan, fully operational</h2>
+          <h2 className="text-[28px] font-bold text-white sm:text-[34px]">{t('hosting.whatsIncluded.heading')}</h2>
         </Reveal>
         <Reveal delay={140}>
-          <p className="max-w-[560px] text-sm text-text-dim">
-            No matter which plan you choose, these six components come standard across every Qubite
-            hosting facility.
-          </p>
+          <p className="max-w-[560px] text-sm text-text-dim">{t('hosting.whatsIncluded.paragraph')}</p>
         </Reveal>
 
         <div className="mt-10 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {included.map((item, i) => {
-            const Icon = item.icon
+            const Icon = includedIcons[i]
             return (
               <Reveal key={item.title} delay={200 + i * 70}>
                 <div className="flex h-full flex-col items-start gap-3 rounded-2xl border border-white/8 bg-white/3 p-6 text-left">

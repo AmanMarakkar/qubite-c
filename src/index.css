@@ -95,8 +95,13 @@
   --container-card: 20rem;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
+  overflow-x: hidden;
   font-family: var(--font-sans);
   color: var(--color-text);
   background: var(--color-bg);

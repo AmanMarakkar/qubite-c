@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
 
@@ -15,30 +16,9 @@ function ChevronIcon({ open, className = 'size-4' }: { open: boolean; className?
   )
 }
 
-const faqs = [
-  {
-    question: 'What shipping options are available for my miners?',
-    answer:
-      'You can ship directly to any of our facilities using your own freight forwarder, or we can arrange collection and import clearance on your behalf. We’ll confirm the receiving address and any documentation you need once your slot is booked.',
-  },
-  {
-    question: 'Why choose Qubite as your hosting provider?',
-    answer:
-      'Every rate, deposit, and fee is disclosed before you commit — no renegotiating after signup. Our team manually reviews power and rack availability for your specific machines before confirming a slot, so what you see is what gets deployed.',
-  },
-  {
-    question: 'Do you support Bitmain Antminer hosting?',
-    answer:
-      'Yes — Bitmain Antminer, MicroBT WhatsMiner, and most major air, hydro, and immersion-cooled ASIC models are supported. Check the "Machine Types" column on each plan, or talk to us if you’re unsure your model fits.',
-  },
-  {
-    question: 'How long does deployment take once hardware arrives?',
-    answer:
-      'Most machines are unboxed, racked, and hashing within 24 hours of arrival, pending the power and rack reservation confirmed during onboarding. You’ll get a notification the moment your fleet comes online.',
-  },
-]
-
 export function HostingFaq() {
+  const { t } = useTranslation()
+  const faqs = t('hosting.faq.items', { returnObjects: true }) as { question: string; answer: string }[]
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   return (
@@ -46,11 +26,11 @@ export function HostingFaq() {
       <Container className="relative flex flex-col items-center gap-4 text-center">
         <Reveal>
           <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(232,167,101,0.3)] bg-[rgba(232,167,101,0.08)] px-4 py-1.5 text-[10px] font-bold tracking-[0.08em] text-[#e8a765] uppercase">
-            FAQ
+            {t('hosting.faq.badge')}
           </span>
         </Reveal>
         <Reveal delay={80}>
-          <h2 className="text-[28px] font-bold text-white sm:text-[34px]">Common hosting questions</h2>
+          <h2 className="text-[28px] font-bold text-white sm:text-[34px]">{t('hosting.faq.heading')}</h2>
         </Reveal>
 
         <div className="mt-8 flex w-full max-w-[720px] flex-col gap-3 text-left">

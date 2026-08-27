@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
 
@@ -80,34 +81,12 @@ function PickaxeIcon({ className = 'size-4' }: { className?: string }) {
   )
 }
 
-const steps = [
-  {
-    num: '01',
-    title: 'Hardware',
-    description: 'Choose the right ASIC miners optimized for your target efficiency & hashrate goals.',
-    icon: HardwareIcon,
-  },
-  {
-    num: '02',
-    title: 'Deployment',
-    description: 'Turn-key assembly, safe express transit, and full rack-mount setup overseen by our experts.',
-    icon: BoltIcon,
-  },
-  {
-    num: '03',
-    title: 'Hosting',
-    description: 'Zero delays. Secure, ultra-efficient operation in our premium tier-3 data centers.',
-    icon: HostingIcon,
-  },
-  {
-    num: '04',
-    title: 'Rewards',
-    description: 'Enjoy daily automated distributions directly to your preferred self-custodied wallet.',
-    icon: RewardsIcon,
-  },
-]
+const stepIcons = [HardwareIcon, BoltIcon, HostingIcon, RewardsIcon]
 
 export function MiningProcess() {
+  const { t } = useTranslation()
+  const steps = t('home.miningProcess.steps', { returnObjects: true }) as { num: string; title: string; description: string }[]
+
   return (
     <section className="relative overflow-hidden bg-[#050505] py-24">
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
@@ -130,22 +109,22 @@ export function MiningProcess() {
         <Reveal>
           <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(45,212,191,0.3)] bg-[rgba(20,60,55,0.4)] px-4 py-1.5 text-[10px] font-bold tracking-[0.08em] text-[#2dd4bf] uppercase">
             <span className="size-1.5 rounded-full bg-[#2dd4bf]" />
-            Fastest Deployment in the Market
+            {t('home.miningProcess.badge')}
           </span>
         </Reveal>
 
         <Reveal delay={80}>
           <h2 className="mt-5 text-[28px] leading-tight font-extrabold text-white sm:text-[32px] md:text-[36px]">
-            Mining,{' '}
+            {t('home.miningProcess.heading1')}{' '}
             <span style={{ backgroundImage: GRADIENT }} className="bg-clip-text text-transparent">
-              Without The Complexity
+              {t('home.miningProcess.heading2')}
             </span>
           </h2>
         </Reveal>
 
         <Reveal delay={140}>
           <p className="mt-2 text-[13px] tracking-[0.15em] text-[#9a9a9a] uppercase">
-            Buy. Deploy. Mine. Scale.
+            {t('home.miningProcess.subtitle')}
           </p>
         </Reveal>
 
@@ -183,7 +162,7 @@ export function MiningProcess() {
 
         <div className="mt-2 grid w-full grid-cols-1 gap-8 pt-4 sm:grid-cols-2 md:mt-0 md:gap-5 md:pt-0 lg:grid-cols-4">
           {steps.map((step, i) => {
-            const Icon = step.icon
+            const Icon = stepIcons[i]
             return (
               <Reveal key={step.num} delay={260 + i * 90}>
                 <div
@@ -211,7 +190,7 @@ export function MiningProcess() {
             style={{ boxShadow: '0 0 30px rgba(232,167,101,0.25)' }}
           >
             <PickaxeIcon className="size-4 text-[#e8a765]" />
-            Start Mining with Qubite
+            {t('home.miningProcess.cta')}
           </button>
         </Reveal>
       </Container>

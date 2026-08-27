@@ -1,56 +1,33 @@
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Badge } from '@/components/Badge'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
 
-interface Category {
-  title: string
-  description: string
-  image: string
-  imageClassName?: string
-  href?: string
-}
-
-const categories: Category[] = [
-  {
-    title: 'Hardware Marketplace',
-    description: 'Browse and purchase mining hardware from verified vendors',
-    image: '/figma/cards/hardware.png',
-    href: '/asic-machines',
-  },
-  {
-    title: 'Energy Solutions',
-    description: 'Turnkey power, land, and grid access for large-scale mining',
-    image: '/figma/cards/energy.png',
-  },
-  {
-    title: 'Technology',
-    description: 'Cutting-edge infrastructure and optimization tools',
-    image: '/figma/cards/glow-blob.png',
-  },
-  {
-    title: 'Academy',
-    description: 'Learn mining fundamentals and advanced strategies',
-    image: '/figma/cards/academy-icon.png',
-    imageClassName: '-top-28 h-52',
-  },
+const categoryMeta = [
+  { image: '/figma/cards/hardware.png', href: '/asic-machines' },
+  { image: '/figma/cards/energy.png' },
+  { image: '/figma/cards/glow-blob.png' },
+  { image: '/figma/cards/academy-icon.png', imageClassName: '-top-28 h-52' },
 ]
 
 export function EcosystemCategories() {
+  const { t } = useTranslation()
+  const categories = (
+    t('home.ecosystemCategories.categories', { returnObjects: true }) as { title: string; description: string }[]
+  ).map((category, i) => ({ ...category, ...categoryMeta[i] }))
+
   return (
     <section className="relative overflow-hidden bg-bg">
       <Container className="relative flex flex-col items-center gap-4 py-24 text-center">
         <Reveal>
-          <Badge tone="bronze">Ecosystem Categories</Badge>
+          <Badge tone="bronze">{t('home.ecosystemCategories.badge')}</Badge>
         </Reveal>
         <Reveal delay={80}>
-          <h2 className="text-[40px] font-bold tracking-tight text-white">The Complete Mining Infrastructure</h2>
+          <h2 className="text-[40px] font-bold tracking-tight text-white">{t('home.ecosystemCategories.heading')}</h2>
         </Reveal>
         <Reveal delay={160}>
-          <p className="max-w-[640px] text-base font-bold text-text-subtle">
-            Access hardware, cloud power, clean energy, and cutting-edge software under a unified,
-            high-performance ecosystem.
-          </p>
+          <p className="max-w-[640px] text-base font-bold text-text-subtle">{t('home.ecosystemCategories.paragraph')}</p>
         </Reveal>
 
         <img

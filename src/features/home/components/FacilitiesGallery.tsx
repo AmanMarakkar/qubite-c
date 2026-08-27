@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
 
@@ -18,6 +19,8 @@ const photos = [
 ]
 
 export function FacilitiesGallery() {
+  const { t } = useTranslation()
+
   return (
     <section className="relative overflow-hidden bg-black py-24">
       <div
@@ -38,11 +41,11 @@ export function FacilitiesGallery() {
         <Reveal>
           <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(45,212,191,0.3)] bg-[rgba(20,60,55,0.4)] px-4 py-1.5 text-[10px] font-bold tracking-[0.08em] text-[#2dd4bf] uppercase">
             <span className="size-1.5 rounded-full bg-[#2dd4bf]" />
-            Inside Our Facilities
+            {t('home.facilitiesGallery.badge')}
           </span>
         </Reveal>
         <Reveal delay={80}>
-          <h2 className="text-[28px] font-bold text-white sm:text-[34px]">Where your machines live &amp; earn</h2>
+          <h2 className="text-[28px] font-bold text-white sm:text-[34px]">{t('home.facilitiesGallery.heading')}</h2>
         </Reveal>
 
         <Reveal delay={160} className="mt-10 w-full">

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
 import { WHATSAPP_LINK } from '@/lib/links'
@@ -46,25 +47,12 @@ function HeadsetIcon({ className = 'size-4' }: { className?: string }) {
   )
 }
 
-const valueProps = [
-  {
-    icon: GaugeIcon,
-    title: 'Transparent rate bands',
-    description: 'Every plan states its exact electricity rate in USD/kWh up front — no hidden surcharges once you’re live.',
-  },
-  {
-    icon: ReceiptIcon,
-    title: 'Clear upfront cash needed',
-    description: 'Deposit and installation costs are disclosed before you commit, so there are no surprises at signup.',
-  },
-  {
-    icon: ShieldCheckIcon,
-    title: 'Human review before activation',
-    description: 'Our team confirms power availability and rack fit for your machines before any slot is reserved.',
-  },
-]
+const valuePropIcons = [GaugeIcon, ReceiptIcon, ShieldCheckIcon]
 
 export function HostingHero() {
+  const { t } = useTranslation()
+  const valueProps = t('hosting.hero.valueProps', { returnObjects: true }) as { title: string; description: string }[]
+
   return (
     <section className="relative overflow-hidden bg-black">
       <img
@@ -80,22 +68,22 @@ export function HostingHero() {
         <Reveal>
           <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(45,212,191,0.3)] bg-[rgba(20,60,55,0.4)] px-4 py-1.5 text-[10px] font-bold tracking-[0.08em] text-[#2dd4bf] uppercase">
             <span className="size-1.5 rounded-full bg-[#2dd4bf]" />
-            Hosting
+            {t('hosting.hero.badge')}
           </span>
         </Reveal>
         <Reveal delay={80}>
           <h1 className="max-w-[760px] text-[36px] leading-tight font-black text-white sm:text-[48px]">
-            Transparent Pricing{' '}
+            {t('hosting.hero.heading1')}{' '}
             <span style={{ backgroundImage: GRADIENT }} className="bg-clip-text text-transparent">
-              &amp; Low Rates
+              {t('hosting.hero.heading2')}
             </span>
           </h1>
         </Reveal>
         <Reveal delay={140}>
           <p className="max-w-[620px] text-base text-text-dim md:text-lg">
-            Hosting plans starting from <span className="font-semibold text-white">4.0¢</span> to{' '}
-            <span className="font-semibold text-white">6.8¢</span> per kWh. Premium rack space, power,
-            and cooling with every cost disclosed before you sign.
+            {t('hosting.hero.paragraphPrefix')} <span className="font-semibold text-white">4.0¢</span>{' '}
+            {t('hosting.hero.paragraphMid')} <span className="font-semibold text-white">6.8¢</span>{' '}
+            {t('hosting.hero.paragraphSuffix')}
           </p>
         </Reveal>
         <Reveal delay={200}>
@@ -104,7 +92,7 @@ export function HostingHero() {
               href="#plans"
               className="inline-flex items-center gap-2 rounded-full bg-accent-bronze px-6 py-3 text-sm font-bold text-white drop-shadow-[0_0_6px_rgba(255,255,255,0.6)] transition-all duration-200 hover:brightness-110 active:scale-95"
             >
-              Compare Plans
+              {t('hosting.hero.comparePlans')}
             </a>
             <a
               href={WHATSAPP_LINK}
@@ -113,14 +101,14 @@ export function HostingHero() {
               className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:border-white/30 hover:bg-black/60 active:scale-95"
             >
               <HeadsetIcon />
-              Talk to a human
+              {t('hosting.hero.talkToHuman')}
             </a>
           </div>
         </Reveal>
 
         <div className="mt-14 grid w-full grid-cols-1 gap-4 sm:grid-cols-3">
           {valueProps.map((item, i) => {
-            const Icon = item.icon
+            const Icon = valuePropIcons[i]
             return (
               <Reveal key={item.title} delay={260 + i * 90}>
                 <div className="flex h-full flex-col items-center gap-3 rounded-2xl border border-white/8 bg-white/3 p-6 text-center backdrop-blur-sm">

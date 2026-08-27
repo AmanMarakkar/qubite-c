@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
@@ -157,24 +158,30 @@ const miners: Miner[] = catalogProducts.map((product, i) => {
 
 type SortKey = 'model' | 'releaseSort' | 'hashrateSort' | 'powerSort' | 'price' | 'profit'
 
-// Order matches the visual column order in the table exactly; `key` is
-// omitted for the two non-sortable columns (Top, Algorithm).
-const columns: { key: SortKey | null; label: string }[] = [
-  { key: 'model', label: 'Model' },
-  { key: 'releaseSort', label: 'Release' },
-  { key: 'hashrateSort', label: 'Hashrate' },
-  { key: 'powerSort', label: 'Power' },
-  { key: null, label: 'Top' },
-  { key: null, label: 'Algorithm' },
-  { key: 'price', label: 'Best Price' },
-  { key: 'profit', label: 'Profit' },
-]
-
-const filterPills = ['Category', 'Cooling', 'Manufacturer', 'Algorithm']
-
 export function AsicComparison() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
+
+  // Order matches the visual column order in the table exactly; `key` is
+  // omitted for the two non-sortable columns (Top, Algorithm).
+  const columns: { key: SortKey | null; label: string }[] = [
+    { key: 'model', label: t('home.asicComparison.columns.model') },
+    { key: 'releaseSort', label: t('home.asicComparison.columns.release') },
+    { key: 'hashrateSort', label: t('home.asicComparison.columns.hashrate') },
+    { key: 'powerSort', label: t('home.asicComparison.columns.power') },
+    { key: null, label: t('home.asicComparison.columns.top') },
+    { key: null, label: t('home.asicComparison.columns.algorithm') },
+    { key: 'price', label: t('home.asicComparison.columns.bestPrice') },
+    { key: 'profit', label: t('home.asicComparison.columns.profit') },
+  ]
+
+  const filterPills = [
+    t('home.asicComparison.filterPills.category'),
+    t('home.asicComparison.filterPills.cooling'),
+    t('home.asicComparison.filterPills.manufacturer'),
+    t('home.asicComparison.filterPills.algorithm'),
+  ]
   const [favorites, setFavorites] = useState<Set<string>>(new Set())
   const [sort, setSort] = useState<{ key: SortKey; direction: 'asc' | 'desc' } | null>(null)
 
@@ -225,19 +232,16 @@ export function AsicComparison() {
         </Reveal>
         <Reveal delay={60}>
           <span className="mt-1 inline-flex items-center gap-1.5 rounded-full border border-[rgba(96,165,250,0.3)] bg-[rgba(59,130,246,0.15)] px-3 py-1 text-[10px] font-bold tracking-[0.08em] text-[#93c5fd] uppercase">
-            Our Products
+            {t('home.asicComparison.badge')}
           </span>
         </Reveal>
         <Reveal delay={120}>
           <h2 className="max-w-[700px] text-[28px] font-extrabold text-white sm:text-[34px]">
-            Compare Our ASIC Miners
+            {t('home.asicComparison.heading')}
           </h2>
         </Reveal>
         <Reveal delay={180}>
-          <p className="max-w-[560px] text-sm text-text-dim">
-            Enterprise-grade mining hardware. German-engineered, UAE-deployed. Highly optimized for
-            thermal stability and peak performance.
-          </p>
+          <p className="max-w-[560px] text-sm text-text-dim">{t('home.asicComparison.paragraph')}</p>
         </Reveal>
         <Reveal delay={240}>
           <a
@@ -248,7 +252,7 @@ export function AsicComparison() {
             style={{ boxShadow: '0 0 30px rgba(232,167,101,0.25)' }}
           >
             <HeadsetIcon className="size-4 text-[#e8a765]" />
-            Talk to human
+            {t('home.asicComparison.talkToHuman')}
           </a>
         </Reveal>
 
@@ -274,7 +278,7 @@ export function AsicComparison() {
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search model, brand, algorithm..."
+                  placeholder={t('home.asicComparison.searchPlaceholder')}
                   className="w-full rounded-full border border-white/10 bg-black/40 py-2.5 pr-4 pl-10 text-sm text-white placeholder:text-text-faint focus:border-accent-cyan/40 focus:outline-none"
                 />
               </div>
@@ -283,7 +287,7 @@ export function AsicComparison() {
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/3 px-4 py-2.5 text-xs font-semibold text-text-dim transition-colors hover:border-white/25 hover:text-white"
               >
                 <FilterIcon />
-                Advanced filters
+                {t('home.asicComparison.advancedFilters')}
               </button>
               <button
                 type="button"
@@ -294,7 +298,7 @@ export function AsicComparison() {
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/3 px-4 py-2.5 text-xs font-semibold text-text-dim transition-colors hover:border-white/25 hover:text-white"
               >
                 <ResetIcon />
-                Reset
+                {t('home.asicComparison.reset')}
               </button>
             </div>
 
@@ -302,7 +306,7 @@ export function AsicComparison() {
               <table className="w-full min-w-[760px] border-collapse text-left">
                 <thead>
                   <tr className="border-b border-white/8 text-[10px] tracking-wide text-text-faint uppercase">
-                    <th className="px-2 py-2 font-medium">Fav</th>
+                    <th className="px-2 py-2 font-medium">{t('home.asicComparison.columns.fav')}</th>
                     {columns.map((col) =>
                       col.key ? (
                         <th key={col.label} className="px-2 py-2 font-medium">
@@ -364,7 +368,8 @@ export function AsicComparison() {
                       </td>
                       <td className="px-2 py-3 whitespace-nowrap">
                         <span className="rounded-full bg-accent-green/10 px-2.5 py-1 text-xs font-bold tabular-nums text-accent-green">
-                          ${miner.profit.toFixed(2)}/day
+                          ${miner.profit.toFixed(2)}
+                          {t('home.asicComparison.perDay')}
                         </span>
                       </td>
                     </tr>
@@ -372,7 +377,7 @@ export function AsicComparison() {
                   {rows.length === 0 ? (
                     <tr>
                       <td colSpan={9} className="px-2 py-8 text-center text-sm text-text-faint">
-                        No miners match your search.
+                        {t('home.asicComparison.noResults')}
                       </td>
                     </tr>
                   ) : null}

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
 import { WHATSAPP_LINK } from '@/lib/links'
@@ -13,65 +14,28 @@ interface Plan {
   recommended?: boolean
 }
 
-const plans: Plan[] = [
-  {
-    name: 'Turnkey Site',
-    tagline: 'Lowest operating cost',
-    rate: '4.0¢',
-    upfront: '$300k per MW',
-    installation: 'Built into the turnkey deployment',
-    power: '6MW ready — up to 100MW constructable',
-    machines: 'Air, Hydro, Immersion',
-  },
-  {
-    name: 'Low Rate Hosted',
-    tagline: 'Lower rate, higher installation fee',
-    rate: '0.065¢',
-    upfront: '2 months rent deposit',
-    installation: '$600 one-time installation fee',
-    power: '8MW available',
-    machines: 'Hydro',
-  },
-  {
-    name: 'Standard Install',
-    tagline: 'Balanced entry plan',
-    rate: '0.075¢',
-    upfront: '2 months rent deposit',
-    installation: '$300 one-time installation fee',
-    power: '5MW available',
-    machines: 'Air, Hydro',
-    recommended: true,
-  },
-  {
-    name: 'Quick Start',
-    tagline: 'No installation fee',
-    rate: '0.08¢',
-    upfront: '2 months rent deposit',
-    installation: '$0 one-time installation fee',
-    power: '3MW available',
-    machines: 'Air, Hydro',
-  },
-]
+const planRates = ['4.0¢', '0.065¢', '0.075¢', '0.08¢']
+const planRecommended = [false, false, true, false]
 
 export function PricingPlans() {
+  const { t } = useTranslation()
+  const plans: Plan[] = (
+    t('hosting.pricingPlans.plans', { returnObjects: true }) as Omit<Plan, 'rate' | 'recommended'>[]
+  ).map((plan, i) => ({ ...plan, rate: planRates[i], recommended: planRecommended[i] }))
+
   return (
     <section id="plans" className="relative overflow-hidden bg-bg py-24">
       <Container className="relative flex flex-col items-center gap-4 text-center">
         <Reveal>
           <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(232,167,101,0.3)] bg-[rgba(232,167,101,0.08)] px-4 py-1.5 text-[10px] font-bold tracking-[0.08em] text-[#e8a765] uppercase">
-            Hosting Plans
+            {t('hosting.pricingPlans.badge')}
           </span>
         </Reveal>
         <Reveal delay={80}>
-          <h2 className="text-[28px] font-bold text-white sm:text-[34px]">
-            Select a plan by cost, commitment, and speed
-          </h2>
+          <h2 className="text-[28px] font-bold text-white sm:text-[34px]">{t('hosting.pricingPlans.heading')}</h2>
         </Reveal>
         <Reveal delay={140}>
-          <p className="max-w-[560px] text-sm text-text-dim">
-            Every plan below shows the exact electricity rate, upfront cash needed, and available
-            power — reviewed by our team before your slot is confirmed.
-          </p>
+          <p className="max-w-[560px] text-sm text-text-dim">{t('hosting.pricingPlans.paragraph')}</p>
         </Reveal>
 
         <div className="mt-10 grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -86,7 +50,7 @@ export function PricingPlans() {
               >
                 {plan.recommended ? (
                   <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-accent-bronze px-3 py-1 text-[10px] font-bold tracking-wide text-white uppercase">
-                    Recommended
+                    {t('hosting.pricingPlans.recommended')}
                   </span>
                 ) : null}
 
@@ -97,24 +61,24 @@ export function PricingPlans() {
 
                 <div className="flex items-baseline gap-1">
                   <span className="text-[32px] font-black text-[#e8a765]">{plan.rate}</span>
-                  <span className="text-xs text-text-faint">/ kWh</span>
+                  <span className="text-xs text-text-faint">{t('hosting.pricingPlans.perKwh')}</span>
                 </div>
 
                 <div className="flex flex-col gap-3 border-t border-white/8 pt-4 text-xs">
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-[10px] tracking-wide text-text-faint uppercase">Upfront</span>
+                    <span className="text-[10px] tracking-wide text-text-faint uppercase">{t('hosting.pricingPlans.upfront')}</span>
                     <span className="text-white">{plan.upfront}</span>
                   </div>
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-[10px] tracking-wide text-text-faint uppercase">Installation</span>
+                    <span className="text-[10px] tracking-wide text-text-faint uppercase">{t('hosting.pricingPlans.installation')}</span>
                     <span className="text-white">{plan.installation}</span>
                   </div>
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-[10px] tracking-wide text-text-faint uppercase">Available Power</span>
+                    <span className="text-[10px] tracking-wide text-text-faint uppercase">{t('hosting.pricingPlans.availablePower')}</span>
                     <span className="text-white">{plan.power}</span>
                   </div>
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-[10px] tracking-wide text-text-faint uppercase">Machine Types</span>
+                    <span className="text-[10px] tracking-wide text-text-faint uppercase">{t('hosting.pricingPlans.machineTypes')}</span>
                     <span className="text-white">{plan.machines}</span>
                   </div>
                 </div>
@@ -129,7 +93,7 @@ export function PricingPlans() {
                       : 'border border-white/15 text-white hover:border-white/40 hover:bg-white/5'
                   }`}
                 >
-                  Get this plan
+                  {t('hosting.pricingPlans.getThisPlan')}
                 </a>
               </div>
             </Reveal>

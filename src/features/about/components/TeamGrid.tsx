@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
 
@@ -9,117 +10,25 @@ interface TeamMember {
   email?: string
 }
 
-const team: TeamMember[] = [
-  {
-    name: 'Tajo Adler',
-    role: 'Co-Founder & Authorized Representative',
-    bio: 'As an entrepreneur, Tajo combines strategic leadership with sustainable investments in future technologies.',
-    photo: '/team/tajo-adler.jpg',
-    email: 'tajo.adler@qubite-international.com',
-  },
-  {
-    name: 'Melina Kießlich',
-    role: 'Co-Founder & CEO',
-    bio: "As co-founder and CEO, Melina is responsible for qubite's strategic direction and operational leadership.",
-    photo: '/team/melina-kiesslich.jpg',
-    email: 'melina.kiesslich@qubite-international.com',
-  },
-  {
-    name: 'Rolf Maier',
-    role: 'Partner',
-    bio: "An official partner of qubite International since 2026, supporting the company's strategic growth and business development.",
-    photo: '/team/rolf-maier.jpg',
-    email: 'rolf.maier@qubite-international.com',
-  },
-  {
-    name: 'Diana Hanibauer',
-    role: 'Chief Operating Officer',
-    bio: "As COO, Diana oversees qubite's day-to-day operations and ensures smooth processes across every department.",
-    photo: '/team/diana-hanibauer.jpg',
-  },
-  {
-    name: 'Adina Sevelius',
-    role: 'Senior Legal Advisor',
-    bio: 'Adina advises qubite on all legal matters and ensures compliance with international regulations.',
-    photo: '/team/adina-sevelius.jpg',
-    email: 'adina.sevelius@qubite-international.com',
-  },
-  {
-    name: 'Malte Findeisen',
-    role: 'Strategic Partner',
-    bio: 'Malte supports qubite in building international partnerships and leads the B2B business unit.',
-    photo: '/team/malte-findeisen.jpg',
-    email: 'malte.findeisen@qubite-international.com',
-  },
-  {
-    name: 'Mischa Guidon',
-    role: 'External Controller',
-    bio: "As external financial strategist, Mischa oversees qubite's financial planning, capital structure, and liquidity, and advises leadership on core financial strategy.",
-    photo: '/team/mischa-guidon.jpg',
-    email: 'mischa.guidon@qubite-international.com',
-  },
-  {
-    name: 'Christoph Wolf',
-    role: 'Head of KYC/AML & Client Relations — Switzerland',
-    bio: "Christoph leads client relations in Switzerland and oversees qubite International's internal KYC/AML compliance framework.",
-    photo: '/team/christoph-wolf.jpg',
-    email: 'chris.wolf@qubite-international.com',
-  },
-  {
-    name: 'Mayur Mukherjee',
-    role: 'Head of Blockchain / Web3',
-    bio: "Mayur leads qubite International's entire crypto and technology division, bringing 23 years of experience.",
-    photo: '/team/mayur-mukherjee.jpg',
-    email: 'mayur.mukherjee@qubite-international.com',
-  },
-  {
-    name: 'Alan Szepieniec',
-    role: 'Core Developer — Neptune Cash',
-    bio: 'The architect of Neptune, Alan is a renowned cryptographer specializing in zero-knowledge proofs and post-quantum cryptography.',
-    photo: '/team/alan-szepieniec.jpg',
-    email: 'alan.szepieniec@qubite-international.com',
-  },
-  {
-    name: 'Thorkil Schmidiger',
-    role: 'Core Developer — Neptune Cash',
-    bio: 'Thorkil is the lead software engineer behind the Neptune blockchain implementation, advancing the protocol alongside Alan.',
-    photo: '/team/thorkil-schmidiger.jpg',
-    email: 'thorkil.schmidiger@qubite-international.com',
-  },
-  {
-    name: 'Disa Sevelius',
-    role: 'Head of Sales & Marketing — Middle East',
-    bio: "Disa leads qubite International's sales and marketing across the Middle East, driving regional growth, partnerships, and brand positioning.",
-    photo: '/team/disa-sevelius.jpg',
-    email: 'disa.sevelius@qubite-international.com',
-  },
-  {
-    name: 'Hashifali Kojanikkanakath',
-    role: 'Account Manager / Sales — Middle East',
-    bio: 'Hashifali brings 6 years of sales experience and manages client support across the Middle East.',
-    photo: '/team/hashifali-kojanikkanakath.jpg',
-    email: 'hashif@qubite-international.com',
-  },
-  {
-    name: 'Peter Kreth',
-    role: 'Head of Client Relations — Italy',
-    bio: 'Peter leads client relations across Italy and has supported the Neptune ecosystem and its community since the project began.',
-    photo: '/team/peter-kreth.jpg',
-    email: 'peter.kreth@qubite-international.com',
-  },
-  {
-    name: 'Mohammed Swalih',
-    role: 'Operations Manager',
-    bio: "Mohammed leads mining operations across all of qubite's sites, managing the development, construction, and expansion of new infrastructure.",
-    photo: '/team/mohammed-swalih.jpg',
-    email: 'mohammed.swalih@qubite-international.com',
-  },
-  {
-    name: 'Lutz Stratmann',
-    role: 'External Advisor — Data Protection & Compliance',
-    bio: 'Former Minister of Science and Culture, Lutz advises qubite externally on sustainability, data protection, and compliance.',
-    photo: '/team/lutz-stratmann.jpg',
-  },
+// Photos and emails aren't translated, so they stay keyed by index against
+// the localized name/role/bio coming from i18n.
+const teamMeta: { photo: string; email?: string }[] = [
+  { photo: '/team/tajo-adler.jpg', email: 'tajo.adler@qubite-international.com' },
+  { photo: '/team/melina-kiesslich.jpg', email: 'melina.kiesslich@qubite-international.com' },
+  { photo: '/team/rolf-maier.jpg', email: 'rolf.maier@qubite-international.com' },
+  { photo: '/team/diana-hanibauer.jpg' },
+  { photo: '/team/adina-sevelius.jpg', email: 'adina.sevelius@qubite-international.com' },
+  { photo: '/team/malte-findeisen.jpg', email: 'malte.findeisen@qubite-international.com' },
+  { photo: '/team/mischa-guidon.jpg', email: 'mischa.guidon@qubite-international.com' },
+  { photo: '/team/christoph-wolf.jpg', email: 'chris.wolf@qubite-international.com' },
+  { photo: '/team/mayur-mukherjee.jpg', email: 'mayur.mukherjee@qubite-international.com' },
+  { photo: '/team/alan-szepieniec.jpg', email: 'alan.szepieniec@qubite-international.com' },
+  { photo: '/team/thorkil-schmidiger.jpg', email: 'thorkil.schmidiger@qubite-international.com' },
+  { photo: '/team/disa-sevelius.jpg', email: 'disa.sevelius@qubite-international.com' },
+  { photo: '/team/hashifali-kojanikkanakath.jpg', email: 'hashif@qubite-international.com' },
+  { photo: '/team/peter-kreth.jpg', email: 'peter.kreth@qubite-international.com' },
+  { photo: '/team/mohammed-swalih.jpg', email: 'mohammed.swalih@qubite-international.com' },
+  { photo: '/team/lutz-stratmann.jpg' },
 ]
 
 function MailIcon({ className = 'size-4' }: { className?: string }) {
@@ -132,14 +41,17 @@ function MailIcon({ className = 'size-4' }: { className?: string }) {
 }
 
 export function TeamGrid() {
+  const { t } = useTranslation()
+  const team: TeamMember[] = (
+    t('about.team.members', { returnObjects: true }) as Omit<TeamMember, 'photo' | 'email'>[]
+  ).map((member, i) => ({ ...member, ...teamMeta[i] }))
+
   return (
     <section className="relative bg-bg py-24">
       <Container className="relative flex flex-col items-center gap-8">
         <Reveal className="text-center">
-          <h2 className="text-2xl font-bold text-white sm:text-[28px]">Our Team</h2>
-          <p className="mt-2 text-sm text-text-subtle">
-            Experienced operators across hardware, hosting, energy, and compliance
-          </p>
+          <h2 className="text-2xl font-bold text-white sm:text-[28px]">{t('about.team.heading')}</h2>
+          <p className="mt-2 text-sm text-text-subtle">{t('about.team.paragraph')}</p>
         </Reveal>
 
         <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">

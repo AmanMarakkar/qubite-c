@@ -1,8 +1,11 @@
+import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/Badge'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
 
 export function AboutHero() {
+  const { t } = useTranslation()
+
   return (
     <section className="relative overflow-hidden bg-black">
       <div
@@ -16,19 +19,15 @@ export function AboutHero() {
 
       <Container className="relative flex flex-col items-center gap-5 pt-30 pb-20 text-center md:pt-36">
         <Reveal>
-          <Badge tone="bronze">About Us</Badge>
+          <Badge tone="bronze">{t('about.hero.badge')}</Badge>
         </Reveal>
         <Reveal delay={80}>
           <h1 className="max-w-[760px] text-[36px] leading-tight font-black text-white sm:text-[48px]">
-            Vision Meets Experience
+            {t('about.hero.heading')}
           </h1>
         </Reveal>
         <Reveal delay={140}>
-          <p className="max-w-[640px] text-base text-text-dim md:text-lg">
-            The team behind qubite — where deep experience meets relentless innovation. Experts in
-            sustainable solutions and energy-intensive future technologies, building the
-            infrastructure layer for hardware, hosting, and clean power.
-          </p>
+          <p className="max-w-[640px] text-base text-text-dim md:text-lg">{t('about.hero.paragraph')}</p>
         </Reveal>
       </Container>
     </section>

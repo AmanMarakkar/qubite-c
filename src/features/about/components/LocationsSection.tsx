@@ -1,37 +1,30 @@
+import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/Badge'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
 
-const stats = [
-  { label: 'Total Capacity', value: '>8 MW' },
-  { label: 'Server Slots', value: '2,100+' },
-  { label: 'PUE Rating', value: '<1.2' },
-  { label: 'Uptime SLA', value: '99.9%' },
-]
-
-const uaeSites = [
-  { name: 'Nahil', photo: '/locations/abu-dhabi-building.webp' },
-  { name: 'Mafraq', photo: '/locations/abu-dhabi-hall.webp' },
-]
-
-const lifecycle = ['Consultation', 'Hardware', 'Import', 'Installation', 'Monitoring', 'Support']
+const uaeSitePhotos = ['/locations/abu-dhabi-building.webp', '/locations/abu-dhabi-hall.webp']
 
 export function LocationsSection() {
+  const { t } = useTranslation()
+  const stats = t('about.locations.stats', { returnObjects: true }) as { label: string; value: string }[]
+  const uaeSites = (t('about.locations.uaeSites', { returnObjects: true }) as { name: string }[]).map((site, i) => ({
+    ...site,
+    photo: uaeSitePhotos[i],
+  }))
+  const lifecycle = t('about.locations.lifecycle.steps', { returnObjects: true }) as string[]
+
   return (
     <section id="locations" className="relative overflow-hidden bg-black py-24 scroll-mt-20">
       <Container className="relative flex flex-col items-center gap-4 text-center">
         <Reveal>
-          <Badge tone="bronze">Locations</Badge>
+          <Badge tone="bronze">{t('about.locations.badge')}</Badge>
         </Reveal>
         <Reveal delay={80}>
-          <h2 className="text-[28px] font-bold text-white sm:text-[34px]">Where We Operate</h2>
+          <h2 className="text-[28px] font-bold text-white sm:text-[34px]">{t('about.locations.heading')}</h2>
         </Reveal>
         <Reveal delay={140}>
-          <p className="max-w-[640px] text-sm text-text-dim">
-            A hybrid infrastructure model built around the UAE — cost-efficient, high-density
-            capacity for compute-intensive workloads, backed by Tier-III certified partner
-            facilities in Germany and Europe for latency-critical, regulated deployments.
-          </p>
+          <p className="max-w-[640px] text-sm text-text-dim">{t('about.locations.paragraph')}</p>
         </Reveal>
 
         <div className="mt-8 grid w-full max-w-[1000px] grid-cols-1 gap-5 text-left sm:grid-cols-2">
@@ -42,13 +35,10 @@ export function LocationsSection() {
                 alt="United Arab Emirates facility"
                 className="h-40 w-full rounded-xl object-cover"
               />
-              <h3 className="text-base font-bold text-white">United Arab Emirates</h3>
-              <p className="text-xs leading-relaxed text-text-dim">
-                Purpose-built for compute-intensive workloads like crypto mining, with affordable,
-                stable energy and full lifecycle service.
-              </p>
+              <h3 className="text-base font-bold text-white">{t('about.locations.uae.title')}</h3>
+              <p className="text-xs leading-relaxed text-text-dim">{t('about.locations.uae.description')}</p>
               <span className="text-[11px] font-bold tracking-wide text-accent-bronze-tint uppercase">
-                → Primary operating base
+                {t('about.locations.uae.tag')}
               </span>
             </div>
           </Reveal>
@@ -60,13 +50,10 @@ export function LocationsSection() {
                 alt="Germany and Europe facility"
                 className="h-40 w-full rounded-xl object-cover"
               />
-              <h3 className="text-base font-bold text-white">Germany &amp; Europe</h3>
-              <p className="text-xs leading-relaxed text-text-dim">
-                Tier-III certified data center partners for highly sensitive, regulated, and
-                latency-critical applications — GDPR-compliant and close to the customer.
-              </p>
+              <h3 className="text-base font-bold text-white">{t('about.locations.europe.title')}</h3>
+              <p className="text-xs leading-relaxed text-text-dim">{t('about.locations.europe.description')}</p>
               <span className="text-[11px] font-bold tracking-wide text-text-subtle uppercase">
-                → Regulated-workload backbone
+                {t('about.locations.europe.tag')}
               </span>
             </div>
           </Reveal>
@@ -84,7 +71,7 @@ export function LocationsSection() {
         </div>
 
         <Reveal delay={420} className="mt-10 w-full">
-          <h3 className="text-lg font-bold text-white">Our UAE Sites</h3>
+          <h3 className="text-lg font-bold text-white">{t('about.locations.uaeSitesHeading')}</h3>
         </Reveal>
 
         <div className="mt-4 grid w-full max-w-[500px] grid-cols-2 gap-4">
@@ -110,10 +97,8 @@ export function LocationsSection() {
         <Reveal delay={720} className="mt-12 w-full max-w-[1000px]">
           <div className="flex flex-col gap-6 rounded-2xl border border-white/8 bg-white/3 p-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col gap-1 text-left">
-              <h3 className="text-sm font-bold text-white">Full lifecycle service</h3>
-              <p className="text-xs text-text-dim">
-                We manage the complete process end-to-end, bundled into one transparent all-in fee.
-              </p>
+              <h3 className="text-sm font-bold text-white">{t('about.locations.lifecycle.title')}</h3>
+              <p className="text-xs text-text-dim">{t('about.locations.lifecycle.description')}</p>
             </div>
             <div className="flex flex-wrap items-center gap-2">
               {lifecycle.map((step, i) => (

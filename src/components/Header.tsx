@@ -1,19 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Container } from '@/components/Container'
 import { WHATSAPP_LINK } from '@/lib/links'
 
-const navLinks = [
-  { label: 'Discover Machines', href: '/asic-machines', internal: true },
-  { label: 'Hosting', href: '/hosting', internal: true },
-  { label: 'About Us', href: '/about', internal: true },
-]
-
-// TODO: swap in the real Telegram / support links once provided.
-const contactLinks = [
-  { label: 'WhatsApp', href: WHATSAPP_LINK, icon: WhatsAppIcon },
-  { label: 'Telegram', href: '#', icon: TelegramIcon },
-  { label: 'Talk to human', href: WHATSAPP_LINK, icon: HeadsetIcon },
+const languages = [
+  { code: 'en', label: 'EN', fullLabel: 'English' },
+  { code: 'ar', label: 'AR', fullLabel: 'العربية' },
 ]
 
 function WhatsAppIcon() {
@@ -52,8 +45,112 @@ function HeadsetIcon() {
   )
 }
 
+function ChevronDownIcon({ className = 'size-2.5' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 12 8" className={className} fill="none" aria-hidden="true">
+      <path d="M1 1.5 6 6.5l5-5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+function LanguageSwitcher() {
+  const { i18n } = useTranslation()
+  const [open, setOpen] = useState(false)
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const current = languages.find((l) => l.code === i18n.language) ?? languages[0]
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  return (
+    <div ref={wrapRef} className="relative hidden sm:block">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        className="flex items-center gap-2 text-[13px] text-white transition-colors hover:text-accent-bronze-tint"
+      >
+        <img src="/figma/hero/globe.svg" alt="" className="size-3.5" />
+        {current.label}
+        <ChevronDownIcon className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+      </button>
+
+      <div
+        role="listbox"
+        className={`absolute top-full right-0 z-30 mt-2 w-40 overflow-hidden rounded-xl border border-white/10 bg-[#111111] shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all duration-150 ${
+          open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+        }`}
+      >
+        {languages.map((lang) => (
+          <button
+            key={lang.code}
+            type="button"
+            role="option"
+            aria-selected={lang.code === i18n.language}
+            onClick={() => {
+              void i18n.changeLanguage(lang.code)
+              setOpen(false)
+            }}
+            className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition-colors ${
+              lang.code === i18n.language ? 'bg-white/8 text-white' : 'text-text-dim hover:bg-white/5 hover:text-white'
+            }`}
+          >
+            {lang.fullLabel}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// Mobile menu lives inside an `overflow-hidden` collapsing panel, which would
+// clip an absolutely-positioned dropdown popover — so mobile gets a plain
+// inline segmented toggle instead of the popover used on desktop.
+function LanguageToggle() {
+  const { i18n } = useTranslation()
+
+  return (
+    <div className="flex items-center gap-2 text-[13px]">
+      <img src="/figma/hero/globe.svg" alt="" className="size-3.5" />
+      <div className="flex overflow-hidden rounded-full border border-border-strong">
+        {languages.map((lang) => (
+          <button
+            key={lang.code}
+            type="button"
+            onClick={() => void i18n.changeLanguage(lang.code)}
+            className={`px-3 py-1.5 font-semibold transition-colors ${
+              lang.code === i18n.language ? 'bg-white text-black' : 'text-white hover:bg-white/10'
+            }`}
+          >
+            {lang.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export function Header() {
+  const { t } = useTranslation()
   const [menuOpen, setMenuOpen] = useState(false)
+
+  const navLinks = [
+    { label: t('header.nav.discoverMachines'), href: '/asic-machines', internal: true },
+    { label: t('header.nav.hosting'), href: '/hosting', internal: true },
+    { label: t('header.nav.aboutUs'), href: '/about', internal: true },
+  ]
+
+  const contactLinks = [
+    { label: t('header.contact.whatsapp'), href: WHATSAPP_LINK, icon: WhatsAppIcon },
+    { label: t('header.contact.telegram'), href: '#', icon: TelegramIcon },
+    { label: t('header.contact.talkToHuman'), href: WHATSAPP_LINK, icon: HeadsetIcon },
+  ]
 
   return (
     <header className="absolute inset-x-0 top-0 z-20 bg-transparent">
@@ -106,17 +203,11 @@ export function Header() {
             ))}
           </div>
 
-          <button
-            type="button"
-            className="hidden items-center gap-2 text-[13px] text-white transition-colors hover:text-accent-bronze-tint sm:flex"
-          >
-            <img src="/figma/hero/globe.svg" alt="" className="size-3.5" />
-            EN
-          </button>
+          <LanguageSwitcher />
 
           <button
             type="button"
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-label={menuOpen ? t('header.closeMenu') : t('header.openMenu')}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((open) => !open)}
             className="flex size-8 items-center justify-center rounded-full border border-border-strong text-white transition-all duration-200 hover:border-white hover:bg-white/5 active:scale-90 md:hidden"
@@ -184,13 +275,7 @@ export function Header() {
             </div>
 
             <div className="flex items-center gap-3 border-t border-white/8 px-3 pt-4 sm:hidden">
-              <button
-                type="button"
-                className="flex items-center gap-2 text-[13px] text-white transition-colors hover:text-accent-bronze-tint"
-              >
-                <img src="/figma/hero/globe.svg" alt="" className="size-3.5" />
-                EN
-              </button>
+              <LanguageToggle />
             </div>
           </Container>
         </nav>

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/Badge'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
@@ -43,14 +44,15 @@ function PinIcon({ className = 'size-5' }: { className?: string }) {
   )
 }
 
-const contactInfo = [
-  { icon: MailIcon, label: 'Email', value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
-  { icon: PhoneIcon, label: 'Phone', value: CONTACT_PHONE, href: 'tel:+971556615745' },
-  { icon: PinIcon, label: 'Region', value: 'Abu Dhabi, United Arab Emirates' },
-]
-
 export function ContactSection() {
+  const { t } = useTranslation()
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
+
+  const contactInfo = [
+    { icon: MailIcon, label: t('about.contact.email'), value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
+    { icon: PhoneIcon, label: t('about.contact.phone'), value: CONTACT_PHONE, href: 'tel:+971556615745' },
+    { icon: PinIcon, label: t('about.contact.region'), value: t('about.contact.regionValue') },
+  ]
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -62,15 +64,13 @@ export function ContactSection() {
     <section id="contact" className="relative bg-bg py-24 scroll-mt-20">
       <Container className="relative flex flex-col items-center gap-4 text-center">
         <Reveal>
-          <Badge tone="bronze">Contact</Badge>
+          <Badge tone="bronze">{t('about.contact.badge')}</Badge>
         </Reveal>
         <Reveal delay={80}>
-          <h2 className="text-[28px] font-bold text-white sm:text-[34px]">Get in Touch</h2>
+          <h2 className="text-[28px] font-bold text-white sm:text-[34px]">{t('about.contact.heading')}</h2>
         </Reveal>
         <Reveal delay={140}>
-          <p className="max-w-[560px] text-sm text-text-dim">
-            Have questions or want to learn more about our products? We'd love to hear from you.
-          </p>
+          <p className="max-w-[560px] text-sm text-text-dim">{t('about.contact.paragraph')}</p>
         </Reveal>
 
         <div className="mt-10 grid w-full max-w-[960px] grid-cols-1 gap-8 text-left lg:grid-cols-[minmax(0,320px)_1fr]">
@@ -103,7 +103,7 @@ export function ContactSection() {
               rel="noopener noreferrer"
               className="mt-2 inline-flex items-center justify-center rounded-full bg-accent-bronze px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:brightness-110 active:scale-95"
             >
-              Talk to a human on WhatsApp
+              {t('about.contact.talkToHumanWhatsapp')}
             </a>
           </Reveal>
 
@@ -111,47 +111,47 @@ export function ContactSection() {
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 rounded-2xl border border-white/8 bg-white/3 p-6">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <label className="flex flex-col gap-1.5">
-                  <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">Name *</span>
+                  <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">{t('about.contact.form.name')}</span>
                   <input
                     required
                     type="text"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    placeholder="Your name"
+                    placeholder={t('about.contact.form.namePlaceholder')}
                     className="rounded-full border border-[rgba(255,255,255,0.1)] bg-[#17130f] px-4 py-2.5 text-sm text-white placeholder:text-text-faint focus:border-accent-cyan/40 focus:outline-none"
                   />
                 </label>
                 <label className="flex flex-col gap-1.5">
-                  <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">Email *</span>
+                  <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">{t('about.contact.form.email')}</span>
                   <input
                     required
                     type="email"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    placeholder="you@example.com"
+                    placeholder={t('about.contact.form.emailPlaceholder')}
                     className="rounded-full border border-[rgba(255,255,255,0.1)] bg-[#17130f] px-4 py-2.5 text-sm text-white placeholder:text-text-faint focus:border-accent-cyan/40 focus:outline-none"
                   />
                 </label>
               </div>
               <label className="flex flex-col gap-1.5">
-                <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">Subject *</span>
+                <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">{t('about.contact.form.subject')}</span>
                 <input
                   required
                   type="text"
                   value={form.subject}
                   onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                  placeholder="What's this about?"
+                  placeholder={t('about.contact.form.subjectPlaceholder')}
                   className="rounded-full border border-[rgba(255,255,255,0.1)] bg-[#17130f] px-4 py-2.5 text-sm text-white placeholder:text-text-faint focus:border-accent-cyan/40 focus:outline-none"
                 />
               </label>
               <label className="flex flex-col gap-1.5">
-                <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">Message *</span>
+                <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">{t('about.contact.form.message')}</span>
                 <textarea
                   required
                   rows={5}
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  placeholder="Your message to us..."
+                  placeholder={t('about.contact.form.messagePlaceholder')}
                   className="resize-none rounded-2xl border border-[rgba(255,255,255,0.1)] bg-[#17130f] px-4 py-3 text-sm text-white placeholder:text-text-faint focus:border-accent-cyan/40 focus:outline-none"
                 />
               </label>
@@ -159,7 +159,7 @@ export function ContactSection() {
                 type="submit"
                 className="mt-1 inline-flex items-center justify-center rounded-full bg-accent-bronze px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:brightness-110 active:scale-95"
               >
-                Send Message
+                {t('about.contact.form.send')}
               </button>
             </form>
           </Reveal>

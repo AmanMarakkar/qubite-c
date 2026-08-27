@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router-dom'
 import { Badge } from '@/components/Badge'
 import { Container } from '@/components/Container'
@@ -34,18 +35,25 @@ const MIN_BTC_PRICE = 20_000
 const MAX_BTC_PRICE = 300_000
 const btcPricePresets = [80_000, 100_000, 150_000, 200_000]
 
-const hostingTiers = [
-  { name: 'Low Rate Hosted', rate: 0.065, tagline: 'Lower rate, higher installation fee' },
-  { name: 'Standard Install', rate: 0.075, tagline: 'Balanced entry plan', recommended: true },
-  { name: 'Quick Start', rate: 0.08, tagline: 'No installation fee' },
-]
+const hostingTierRates = [0.065, 0.075, 0.08]
+const hostingTierRecommended = [false, true, false]
 
 const currency = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })
 const currencyPrecise = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })
 
 export function ProductDetailPage() {
+  const { t } = useTranslation()
   const { slug } = useParams<{ slug: string }>()
   const product = slug ? getProductBySlug(slug) : undefined
+
+  // Reuses the same 3 tiers (skipping Turnkey Site) from the hosting plans
+  // translations so tier names/taglines stay in sync with the /hosting page.
+  const hostingTiers = (
+    t('hosting.pricingPlans.plans', { returnObjects: true }) as { name: string; tagline: string }[]
+  )
+    .slice(1)
+    .map((plan, i) => ({ ...plan, rate: hostingTierRates[i], recommended: hostingTierRecommended[i] }))
+
   const [btcPrice, setBtcPrice] = useState(BASE_BTC_PRICE)
   const [hostingRateIndex, setHostingRateIndex] = useState(
     hostingTiers.findIndex((tier) => tier.recommended) === -1 ? 0 : hostingTiers.findIndex((tier) => tier.recommended),
@@ -80,13 +88,13 @@ export function ProductDetailPage() {
     return (
       <section className="bg-bg py-32">
         <Container className="flex flex-col items-center gap-4 text-center">
-          <h1 className="text-2xl font-bold text-white">Product not found</h1>
-          <p className="text-sm text-text-subtle">This machine isn&apos;t in our current catalog.</p>
+          <h1 className="text-2xl font-bold text-white">{t('productDetail.notFoundTitle')}</h1>
+          <p className="text-sm text-text-subtle">{t('productDetail.notFoundBody')}</p>
           <Link
             to="/asic-machines"
             className="mt-2 inline-flex items-center gap-2 rounded-full bg-accent-bronze px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:brightness-110"
           >
-            Back to Discover Machines
+            {t('productDetail.backToMachines')}
           </Link>
         </Container>
       </section>
@@ -101,11 +109,11 @@ export function ProductDetailPage() {
       <Container className="pt-8">
         <nav className="flex items-center gap-2 text-xs text-text-faint">
           <Link to="/" className="transition-colors hover:text-white">
-            Home
+            {t('productDetail.breadcrumbHome')}
           </Link>
           <ChevronRightIcon className="size-2.5" />
           <Link to="/asic-machines" className="transition-colors hover:text-white">
-            Machines
+            {t('productDetail.breadcrumbMachines')}
           </Link>
           <ChevronRightIcon className="size-2.5" />
           <span className="text-text-dim">{product.title}</span>
@@ -136,7 +144,10 @@ export function ProductDetailPage() {
           </Reveal>
 
           <Reveal delay={80} className="flex flex-col gap-5">
-            <Badge tone="bronze">Hosting starts from {hostingTiers[0].rate}¢/kWh</Badge>
+            <Badge tone="bronze">
+              {t('productDetail.hostingStartsFrom')} {hostingTiers[0].rate}
+              {t('productDetail.perKwh')}
+            </Badge>
             <h1 className="text-[28px] leading-tight font-black text-white sm:text-[36px]">{product.title}</h1>
 
             <div className="flex flex-wrap items-center gap-4">
@@ -148,24 +159,24 @@ export function ProductDetailPage() {
                     : 'border-[rgba(248,113,113,0.3)] bg-[rgba(239,68,68,0.12)] text-[#f87171]'
                 }`}
               >
-                {product.status}
+                {inStock ? t('asicMachines.products.inStock') : t('asicMachines.products.noStock')}
               </span>
             </div>
 
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-text-dim">
               <span className="flex items-center gap-1.5">
                 <HashrateIcon className="size-4 text-[#22d3ee]" />
-                Hashrate: <span className="font-semibold text-white">{product.hashrate}</span>
+                {t('productDetail.hashrate')}: <span className="font-semibold text-white">{product.hashrate}</span>
               </span>
               <span className="text-text-faint">·</span>
               <span className="flex items-center gap-1.5">
                 <PowerIcon className="size-4 text-[#4ade80]" />
-                Power: <span className="font-semibold text-white">{product.power}</span>
+                {t('productDetail.power')}: <span className="font-semibold text-white">{product.power}</span>
               </span>
               <span className="text-text-faint">·</span>
               <span className="flex items-center gap-1.5">
                 <EfficiencyIcon className="size-4 text-[#facc15]" />
-                Efficiency: <span className="font-semibold text-white">{product.efficiency}</span>
+                {t('productDetail.efficiency')}: <span className="font-semibold text-white">{product.efficiency}</span>
               </span>
             </div>
 
@@ -178,7 +189,7 @@ export function ProductDetailPage() {
                 style={{ boxShadow: '0 4px 14px rgba(34,197,94,0.3)' }}
               >
                 <WhatsAppIcon className="size-4" />
-                Buy Now
+                {t('productDetail.buyNow')}
               </a>
               <a
                 href={WHATSAPP_LINK}
@@ -187,10 +198,10 @@ export function ProductDetailPage() {
                 className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:border-white/40 hover:bg-white/5 active:scale-95"
               >
                 <HeadsetIcon />
-                Talk to a human
+                {t('productDetail.talkToAHuman')}
               </a>
             </div>
-            <p className="text-xs text-text-faint">avg. wait time 3 minutes</p>
+            <p className="text-xs text-text-faint">{t('productDetail.avgWaitTime')}</p>
           </Reveal>
         </Container>
       </section>
@@ -200,17 +211,18 @@ export function ProductDetailPage() {
         <Container>
           <Reveal>
             <div className="rounded-3xl border border-white/8 bg-white/3 p-6 sm:p-8">
-              <h2 className="text-xl font-bold text-white">Revenue Calculator</h2>
+              <h2 className="text-xl font-bold text-white">{t('productDetail.revenueCalculator.title')}</h2>
               <p className="mt-1 text-sm text-text-subtle">
-                BTC mined per month:{' '}
+                {t('productDetail.revenueCalculator.btcMinedPerMonth')}{' '}
                 <span className="font-semibold text-white">{revenue ? revenue.btcMinedPerMonth.toFixed(5) : '0'} BTC</span>
                 {' · '}
-                Hosting: <span className="font-semibold text-white">{hostingTiers[hostingRateIndex].rate}¢/kWh</span>
+                {t('header.nav.hosting')}:{' '}
+                <span className="font-semibold text-white">{hostingTiers[hostingRateIndex].rate}¢/kWh</span>
               </p>
 
               <div className="mt-6 flex flex-col gap-3 rounded-2xl border border-white/8 bg-black/20 p-5">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">BTC Price</span>
+                  <span className="text-[10px] font-bold tracking-wide text-text-faint uppercase">{t('productDetail.revenueCalculator.btcPrice')}</span>
                   <div className="flex items-center gap-1 rounded-full border border-white/10 bg-black/40 px-3 py-1.5">
                     <span className="text-sm text-text-faint">$</span>
                     <input
@@ -256,37 +268,37 @@ export function ProductDetailPage() {
 
               <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <div className="flex flex-col gap-1 rounded-2xl border border-white/8 bg-black/20 p-5">
-                  <span className="text-[11px] font-bold tracking-wide text-text-faint uppercase">Monthly Revenue</span>
+                  <span className="text-[11px] font-bold tracking-wide text-text-faint uppercase">{t('productDetail.revenueCalculator.monthlyRevenue')}</span>
                   <span className="text-2xl font-black text-[#4ade80]">{revenue ? currency.format(revenue.monthly) : '$0'}</span>
                 </div>
                 <div className="flex flex-col gap-1 rounded-2xl border border-white/8 bg-black/20 p-5">
-                  <span className="text-[11px] font-bold tracking-wide text-text-faint uppercase">Est. Hosting Cost</span>
+                  <span className="text-[11px] font-bold tracking-wide text-text-faint uppercase">{t('productDetail.revenueCalculator.estHostingCost')}</span>
                   <span className="text-2xl font-black text-[#f87171]">
                     {revenue ? `-${currency.format(revenue.monthlyHostingCost)}` : '$0'}
                   </span>
                 </div>
                 <div className="flex flex-col gap-1 rounded-2xl border border-[rgba(232,167,101,0.5)] bg-[rgba(232,167,101,0.08)] p-5">
-                  <span className="text-[11px] font-bold tracking-wide text-text-faint uppercase">Net Monthly Profit</span>
+                  <span className="text-[11px] font-bold tracking-wide text-text-faint uppercase">{t('productDetail.revenueCalculator.netMonthlyProfit')}</span>
                   <span className="text-2xl font-black text-[#e8a765]">
                     {revenue ? currency.format(revenue.netMonthly) : '$0'}
                   </span>
                 </div>
               </div>
-              <p className="mt-4 text-[11px] text-text-faint">
-                *Revenue estimates are illustrative, assuming constant network difficulty and 100% uptime.
-              </p>
+              <p className="mt-4 text-[11px] text-text-faint">{t('productDetail.revenueCalculator.disclaimer')}</p>
             </div>
           </Reveal>
 
           <Reveal delay={80} className="mt-6">
             <div className="rounded-3xl border border-white/8 bg-white/3 p-6 sm:p-8">
-              <h2 className="text-xl font-bold text-white">5-Year Cumulative Revenue Forecast</h2>
-              <p className="mt-1 text-sm text-text-subtle">Based on the BTC price set above.</p>
+              <h2 className="text-xl font-bold text-white">{t('productDetail.forecast.title')}</h2>
+              <p className="mt-1 text-sm text-text-subtle">{t('productDetail.forecast.subtitle')}</p>
 
               <div className="mt-6 flex flex-col gap-3">
                 {forecast.map((row) => (
                   <div key={row.year} className="flex items-center gap-4">
-                    <span className="w-14 shrink-0 text-xs font-semibold text-text-dim">Year {row.year}</span>
+                    <span className="w-14 shrink-0 text-xs font-semibold text-text-dim">
+                      {t('productDetail.forecast.year')} {row.year}
+                    </span>
                     <div className="relative h-7 flex-1 overflow-hidden rounded-full bg-black/30">
                       <div
                         className="h-full rounded-full bg-gradient-to-r from-accent-bronze-tint to-accent-copper transition-all duration-500"
@@ -309,9 +321,9 @@ export function ProductDetailPage() {
         <Container>
           <Reveal>
             <div className="flex flex-col gap-1">
-              <h2 className="text-xl font-bold text-white">Hosting Plans for This Machine</h2>
+              <h2 className="text-xl font-bold text-white">{t('productDetail.hostingPlans.title')}</h2>
               <p className="text-sm text-text-subtle">
-                Pick a plan to see its cost reflected in the calculator above — based on {product.power} continuous draw.
+                {t('productDetail.hostingPlans.subtitle')} {product.power} {t('productDetail.hostingPlans.subtitleSuffix')}
               </p>
             </div>
           </Reveal>
@@ -333,7 +345,7 @@ export function ProductDetailPage() {
                   >
                     {tier.recommended ? (
                       <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-accent-bronze px-3 py-1 text-[10px] font-bold tracking-wide text-white uppercase">
-                        Recommended
+                        {t('productDetail.hostingPlans.recommended')}
                       </span>
                     ) : null}
                     <div className="flex flex-col gap-1">
@@ -342,14 +354,14 @@ export function ProductDetailPage() {
                     </div>
                     <div className="flex items-baseline gap-1">
                       <span className="text-2xl font-black text-[#e8a765]">{tier.rate}¢</span>
-                      <span className="text-xs text-text-faint">/ kWh</span>
+                      <span className="text-xs text-text-faint">{t('productDetail.hostingPlans.perKwh')}</span>
                     </div>
                     <div className="flex flex-col gap-0.5 border-t border-white/8 pt-3">
-                      <span className="text-[10px] tracking-wide text-text-faint uppercase">Est. Monthly Cost</span>
+                      <span className="text-[10px] tracking-wide text-text-faint uppercase">{t('productDetail.hostingPlans.estMonthlyCost')}</span>
                       <span className="text-lg font-bold text-white">{currencyPrecise.format(monthlyCost)}</span>
                     </div>
                     {selected ? (
-                      <span className="text-[10px] font-bold tracking-wide text-[#e8a765] uppercase">✓ Selected</span>
+                      <span className="text-[10px] font-bold tracking-wide text-[#e8a765] uppercase">{t('productDetail.hostingPlans.selected')}</span>
                     ) : null}
                   </button>
                 </Reveal>
@@ -361,7 +373,7 @@ export function ProductDetailPage() {
               to="/hosting"
               className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-bronze-tint transition-colors hover:text-white"
             >
-              View all hosting plans
+              {t('productDetail.hostingPlans.viewAllPlans')}
               <ChevronRightIcon className="size-3" />
             </Link>
           </Reveal>
@@ -373,7 +385,7 @@ export function ProductDetailPage() {
         <Container className="grid grid-cols-1 gap-10 lg:grid-cols-2">
           <Reveal>
             <div className="flex flex-col gap-3">
-              <h2 className="text-xl font-bold text-white">Description</h2>
+              <h2 className="text-xl font-bold text-white">{t('productDetail.description')}</h2>
               <p className="text-sm leading-relaxed text-text-dim">{product.description}</p>
 
               <div className="mt-4 flex flex-wrap gap-2">
@@ -391,18 +403,18 @@ export function ProductDetailPage() {
 
           <Reveal delay={80}>
             <div className="flex flex-col gap-3">
-              <h2 className="text-xl font-bold text-white">Technical Specifications</h2>
+              <h2 className="text-xl font-bold text-white">{t('productDetail.technicalSpecifications')}</h2>
               <div className="overflow-hidden rounded-2xl border border-white/8">
                 {[
-                  ['Manufacturer', product.specs.manufacturer],
-                  ['Model', product.specs.model],
-                  ['Algorithm', product.algorithm],
-                  ['Release', product.specs.release],
-                  ['Noise Level', product.specs.noiseLevel],
-                  ['Fan(s)', product.specs.fans],
-                  ['Interface', product.specs.interface],
-                  ['Temperature', product.specs.temperature],
-                  ['Humidity', product.specs.humidity],
+                  [t('productDetail.specs.manufacturer'), product.specs.manufacturer],
+                  [t('productDetail.specs.model'), product.specs.model],
+                  [t('productDetail.specs.algorithm'), product.algorithm],
+                  [t('productDetail.specs.release'), product.specs.release],
+                  [t('productDetail.specs.noiseLevel'), product.specs.noiseLevel],
+                  [t('productDetail.specs.fans'), product.specs.fans],
+                  [t('productDetail.specs.interface'), product.specs.interface],
+                  [t('productDetail.specs.temperature'), product.specs.temperature],
+                  [t('productDetail.specs.humidity'), product.specs.humidity],
                 ].map(([label, value], i) => (
                   <div
                     key={label}
