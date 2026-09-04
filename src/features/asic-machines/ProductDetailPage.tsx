@@ -5,6 +5,7 @@ import { Badge } from '@/components/Badge'
 import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
 import { getProductBySlug } from '@/features/asic-machines/products'
+import { BASE_BTC_PRICE, calcBtcMinedPerMonth, calcMonthlyHostingCost } from '@/features/asic-machines/revenueMath'
 import { WHATSAPP_LINK } from '@/lib/links'
 import { EfficiencyIcon, HashrateIcon, PowerIcon, WhatsAppIcon } from './components/icons'
 
@@ -30,7 +31,6 @@ function ChevronRightIcon({ className = 'size-3' }: { className?: string }) {
   )
 }
 
-const BASE_BTC_PRICE = 80_000
 const MIN_BTC_PRICE = 20_000
 const MAX_BTC_PRICE = 300_000
 const btcPricePresets = [80_000, 100_000, 150_000, 200_000]
@@ -62,21 +62,9 @@ export function ProductDetailPage() {
   const revenue = useMemo(() => {
     if (!product) return null
 
-    // `dailyProfitUsd` (shown site-wide as "Est. Daily Profit") is already
-    // NET of hosting costs, assumed at the recommended tier's rate. To avoid
-    // subtracting hosting cost twice, we gross that figure back up to a
-    // baseline revenue before scaling it with the selected BTC price —
-    // hosting cost itself doesn't move with BTC price, only mined-BTC value does.
-    const baselineRateIndex = hostingTiers.findIndex((tier) => tier.recommended)
-    const baselineRate = hostingTiers[baselineRateIndex === -1 ? 0 : baselineRateIndex].rate
-    const baselineHostingCost = (product.powerValue * 24 * 30 * baselineRate) / 1000
-    const baselineNetMonthly = product.dailyProfitUsd * 30
-    const baselineGrossMonthly = baselineNetMonthly + baselineHostingCost
-
-    const btcMinedPerMonth = baselineGrossMonthly / BASE_BTC_PRICE
+    const btcMinedPerMonth = calcBtcMinedPerMonth(product, hostingTiers)
     const monthly = btcMinedPerMonth * btcPrice
-    const hostingRate = hostingTiers[hostingRateIndex].rate
-    const monthlyHostingCost = (product.powerValue * 24 * 30 * hostingRate) / 1000
+    const monthlyHostingCost = calcMonthlyHostingCost(product, hostingTiers[hostingRateIndex].rate)
     return {
       btcMinedPerMonth,
       monthly,

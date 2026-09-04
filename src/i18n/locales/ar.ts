@@ -400,6 +400,13 @@ export const ar: TranslationSchema = {
       noResultsTitle: 'لا توجد منتجات تطابق عوامل التصفية',
       noResultsSubtitle: 'جرّب فئة أو علامة تجارية أو كلمة بحث مختلفة.',
     },
+    calculator: {
+      badge: 'حاسبة الأرباح',
+      heading: 'احسب أرباح التعدين المتوقعة',
+      subtitle: 'اختر جهازًا أدناه لترى العائد المتوقع عند استضافته مع Qubite.',
+      selectMachine: 'اختر جهازًا',
+      hosting: 'الاستضافة',
+    },
   },
   productDetail: {
     notFoundTitle: 'المنتج غير موجود',

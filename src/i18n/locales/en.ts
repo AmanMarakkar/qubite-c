@@ -399,6 +399,13 @@ export const en = {
       noResultsTitle: 'No products match your filters',
       noResultsSubtitle: 'Try a different category, brand, or search term.',
     },
+    calculator: {
+      badge: 'Revenue Calculator',
+      heading: 'Estimate Your Mining Profit',
+      subtitle: 'Pick a machine below and see what it could earn you, hosted with Qubite.',
+      selectMachine: 'Select a Machine',
+      hosting: 'Hosting',
+    },
   },
   productDetail: {
     notFoundTitle: 'Product not found',
