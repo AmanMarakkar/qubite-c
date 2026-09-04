@@ -61,7 +61,19 @@ export function ProductDetailPage() {
 
   const revenue = useMemo(() => {
     if (!product) return null
-    const btcMinedPerMonth = (product.dailyProfitUsd / BASE_BTC_PRICE) * 30
+
+    // `dailyProfitUsd` (shown site-wide as "Est. Daily Profit") is already
+    // NET of hosting costs, assumed at the recommended tier's rate. To avoid
+    // subtracting hosting cost twice, we gross that figure back up to a
+    // baseline revenue before scaling it with the selected BTC price —
+    // hosting cost itself doesn't move with BTC price, only mined-BTC value does.
+    const baselineRateIndex = hostingTiers.findIndex((tier) => tier.recommended)
+    const baselineRate = hostingTiers[baselineRateIndex === -1 ? 0 : baselineRateIndex].rate
+    const baselineHostingCost = (product.powerValue * 24 * 30 * baselineRate) / 1000
+    const baselineNetMonthly = product.dailyProfitUsd * 30
+    const baselineGrossMonthly = baselineNetMonthly + baselineHostingCost
+
+    const btcMinedPerMonth = baselineGrossMonthly / BASE_BTC_PRICE
     const monthly = btcMinedPerMonth * btcPrice
     const hostingRate = hostingTiers[hostingRateIndex].rate
     const monthlyHostingCost = (product.powerValue * 24 * 30 * hostingRate) / 1000
@@ -72,7 +84,7 @@ export function ProductDetailPage() {
       monthlyHostingCost,
       netMonthly: monthly - monthlyHostingCost,
     }
-  }, [product, btcPrice, hostingRateIndex])
+  }, [product, btcPrice, hostingRateIndex, hostingTiers])
 
   const forecast = useMemo(() => {
     if (!revenue) return []

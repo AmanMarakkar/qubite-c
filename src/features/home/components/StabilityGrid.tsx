@@ -55,7 +55,7 @@ export function StabilityGrid() {
                   <p className="text-sm leading-relaxed text-text-muted">{cards[0].description}</p>
                 </div>
                 <img
-                  src="/figma/bento/deployment-graphic.png"
+                  src="/figma/bento/global-network-wall-map.jpeg"
                   alt=""
                   className="h-45 w-full rounded-sm border border-white/4 object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                 />
@@ -121,7 +121,7 @@ export function StabilityGrid() {
                   <p className="text-sm leading-relaxed text-text-muted">{cards[3].description}</p>
                 </div>
                 <img
-                  src="/figma/bento/jurisdiction-graphic.png"
+                  src="/figma/bento/jurisdiction-analysis-desk.jpeg"
                   alt=""
                   className="h-45 w-full rounded-sm border border-white/4 object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                 />

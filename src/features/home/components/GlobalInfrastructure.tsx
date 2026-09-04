@@ -7,11 +7,14 @@ export function GlobalInfrastructure() {
 
   return (
     <section className="global-infrastructure-section">
-      <img
-        src="/figma/global/network-bg.png"
-        alt=""
+      <video
+        src="/figma/global/global-mining-animated.mp4"
         className="global-infrastructure-map"
         aria-hidden="true"
+        autoPlay
+        muted
+        loop
+        playsInline
       />
       <div className="global-infrastructure-overlay" aria-hidden="true" />
 

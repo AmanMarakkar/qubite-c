@@ -5,11 +5,19 @@ import { Container } from '@/components/Container'
 import { Reveal } from '@/components/Reveal'
 
 const categoryMeta = [
-  { image: '/figma/cards/hardware.png', href: '/asic-machines' },
-  { image: '/figma/cards/energy.png' },
-  { image: '/figma/cards/glow-blob.png' },
-  { image: '/figma/cards/academy-icon.png', imageClassName: '-top-28 h-52' },
+  { image: '/figma/cards/hardware-marketplace.png', href: '/asic-machines' },
+  { image: '/figma/cards/energy-solutions.png' },
+  { image: '/figma/cards/technology.png' },
+  { image: '/figma/cards/academy.png' },
 ]
+
+function ArrowUpRightIcon({ className = 'size-4' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 16 16" className={className} fill="none" aria-hidden="true">
+      <path d="M16 16V0H0M16 0L0 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  )
+}
 
 export function EcosystemCategories() {
   const { t } = useTranslation()
@@ -30,36 +38,27 @@ export function EcosystemCategories() {
           <p className="max-w-[640px] text-base font-bold text-text-subtle">{t('home.ecosystemCategories.paragraph')}</p>
         </Reveal>
 
-        <img
-          src="/figma/cards/section-glow.svg"
-          alt=""
-          className="pointer-events-none absolute top-[280px] left-1/2 w-[1650px] max-w-none -translate-x-1/2 opacity-60"
-          aria-hidden="true"
-        />
-
-        <div className="relative grid w-full max-w-[1320px] grid-cols-1 gap-x-5 gap-y-28 pt-20 sm:grid-cols-2 sm:gap-y-24 lg:grid-cols-4 lg:gap-y-5">
+        <div className="relative grid w-full max-w-[1320px] grid-cols-1 gap-5 pt-16 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map((category, i) => {
             const cardClassName =
-              'group relative flex h-[330px] flex-col justify-end rounded-[28px] border border-white/4 bg-gradient-to-br from-[#515050] to-transparent px-6 pt-19 pb-6 text-left shadow-[0_0_6px_0_rgba(102,153,255,0.15),0_0_24px_0_rgba(102,153,255,0.35)] transition-all duration-300 hover:-translate-y-2 hover:border-white/10 hover:shadow-[0_0_10px_0_rgba(102,153,255,0.25),0_0_40px_0_rgba(102,153,255,0.5)]'
+              'group flex h-full flex-col overflow-hidden rounded-2xl border border-white/8 bg-[#161616] text-left transition-all duration-300 hover:-translate-y-1.5 hover:border-white/20'
             const cardContent = (
               <>
-                <img
-                  src={category.image}
-                  alt=""
-                  className={`absolute left-1/2 w-auto -translate-x-1/2 object-contain drop-shadow-[0_12px_30px_rgba(255,255,255,0.25)] transition-transform duration-500 group-hover:scale-110 ${category.imageClassName ?? '-top-16 h-36'}`}
-                />
-                <div className="flex flex-col gap-3">
-                  <h3 className="text-xl font-bold tracking-tight text-white">{category.title}</h3>
-                  <p className="text-sm leading-5 text-text-subtle">{category.description}</p>
+                <div className="aspect-[4/3] w-full overflow-hidden">
+                  <img
+                    src={category.image}
+                    alt=""
+                    className="size-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
                 </div>
-                <div className="flex justify-end pt-6">
-                  <span className="flex size-10 items-center justify-center rounded-full bg-surface transition-all duration-300 group-hover:bg-accent-bronze-tint/20">
-                    <img
-                      src="/figma/cards/arrow-up-right.svg"
-                      alt=""
-                      className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    />
-                  </span>
+                <div className="flex flex-1 flex-col gap-2 p-5">
+                  <h3 className="text-lg font-bold tracking-tight text-white">{category.title}</h3>
+                  <p className="text-sm leading-5 text-text-subtle">{category.description}</p>
+                  <div className="mt-auto flex justify-end pt-4">
+                    <span className="flex size-9 items-center justify-center rounded-full border border-accent-bronze-tint/40 text-accent-bronze-tint transition-all duration-300 group-hover:bg-accent-bronze-tint/10">
+                      <ArrowUpRightIcon className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </span>
+                  </div>
                 </div>
               </>
             )
