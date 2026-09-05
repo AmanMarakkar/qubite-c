@@ -251,6 +251,15 @@ body {
   transform: translateX(-50%);
 }
 
+.global-infrastructure-blur {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  background: rgb(7 8 11 / 12%);
+}
+
 .global-infrastructure-overlay {
   pointer-events: none;
   position: absolute;

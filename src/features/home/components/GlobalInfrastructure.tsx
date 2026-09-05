@@ -16,6 +16,7 @@ export function GlobalInfrastructure() {
         loop
         playsInline
       />
+      <div className="global-infrastructure-blur" aria-hidden="true" />
       <div className="global-infrastructure-overlay" aria-hidden="true" />
 
       <div className="global-infrastructure-content">
